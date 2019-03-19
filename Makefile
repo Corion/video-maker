@@ -17,6 +17,9 @@ AUDIO_RATE=256k
 TARGET_RESOLUTION=1920x1080
 DURATION=5
 
+%.yml : | %.1.MP4
+	video-metadata $^ -o $@
+
 $(HEADER) $(TRAILER): gpw2019-sponsors.png
 	# -v must come from the video, sample_rate as well
 	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=48000" \
