@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Cwd;
+
+GetOptions(
+    'o=s' => \my $outname,
+    'v'   => \my $verbose,
+    'x=s' => \my $x,
+    'y=s' => \my $y,
+);
+my ($background) = grep !/\.mp4/i, @ARGV;
+my ($video) = grep /\.mp4/i, @ARGV;
+
+my $ffmpeg = 'ffmpeg';
+
+my @cmd = ( $ffmpeg => 
+             '-loop', '1',
+             '-framerate', '30000/1001',
+             '-i', $background,
+             '-i', $video,
+             '-filter_complex', "[0][1]overlay=$x:$y:shortest=1[out]",
+             '-map', '[out]',
+             '-map', '1:a', '-c:a', 'copy',
+             '-framerate', '30000/1001',
+             #'-r', '30000/1001',
+             $outname, '-y' );
+warn "@cmd" if $verbose;
+system(@cmd) == 0
+    or die "$? / $!";

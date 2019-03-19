@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use Getopt::Long;
+use YAML 'LoadFile';
+use File::Temp 'tempfile';
+use Cwd;
+
+GetOptions(
+    'o=s' => \my $outname,
+    'v'   => \my $verbose,
+);
+
+my $ffmpeg = 'ffmpeg';
+
+my ($fh, $listname) = tempfile(UNLINK => 1);
+my $cwd = getcwd();
+
+my ($config) = grep /\.yml/i, @ARGV;
+if( $config ) {
+    $config = LoadFile( $config );
+} else {
+    $config = {}
+};
+
+print $fh join( "\n", map { qq(file '$cwd/$_') } grep { !/yml$/i}@ARGV);
+close $fh;
+
+my @metadata;
+for my $meta (qw(title author show language)) {
+    push @metadata, '-metadata', $meta . '=' . $config->{$meta}
+        if exists $config->{$meta};
+}; 
+
+my @cmd = ( $ffmpeg => '-f', 'concat', '-safe', '0', '-i', $listname, '-c', 'copy', @metadata, $outname, '-y' );
+warn "@cmd" if $verbose;
+system(@cmd) == 0
+    or die "$? / $!";
