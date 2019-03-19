@@ -2,6 +2,7 @@ JOIN=./video-join -v
 TRIM=./video-trim -v
 INSET=./video-inset -v
 SCALE=./video-scale -v
+METADATA=./video-metadata -v
 HEADER_TRAILER=./video-header-trailer -v
 
 OVERLAY=gpw2019-overlay.png
@@ -17,8 +18,12 @@ AUDIO_RATE=256k
 TARGET_RESOLUTION=1920x1080
 DURATION=5
 
-%.yml : | %.1.MP4
-	video-metadata $^ -o $@
+VIDEOS := $(subst .1.MP4,.final.MP4,$(wildcard *.1.MP4))
+
+.PRECIOUS: %.yml %.middle.MP4
+
+%.yml : | %.joined.MP4
+	$(METADATA) $^ $| -o $@
 
 $(HEADER) $(TRAILER): gpw2019-sponsors.png
 	# -v must come from the video, sample_rate as well

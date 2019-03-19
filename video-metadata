@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use Getopt::Long;
+use YAML 'DumpFile';
+
+GetOptions(
+    'o=s' => \my $outname,
+    'v'   => \my $verbose,
+    'author=s' => \my $author,
+    'show=s' => \my $show,
+    'languate=s' => \my $language,
+);
+
+my ($movie) = @ARGV;
+
+(my $title = $movie) =~ s!\.joined\.MP4$!!i;
+$title =~ s!^(20\d\d)-\d\d-\d\d-!!;
+$title =~ s!-! !g;
+
+my $config = {
+    start => '00:00:00.0000',
+    stop  => '00:00:00.0000',
+    metadata => {
+        title => $title,
+        author => $author,
+        show   => $show,
+        language => $language,
+    },
+};
+
+DumpFile( $outname, $config );
