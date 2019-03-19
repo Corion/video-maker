@@ -28,7 +28,7 @@ print $fh join( "\n", map { qq(file '$cwd/$_') } grep { !/yml$/i}@ARGV);
 close $fh;
 
 my @metadata;
-for my $meta (keys %{ $config->{metadata} || {}})) {
+for my $meta (keys %{ $config->{metadata} || {} }) {
     push @metadata, '-metadata', $meta . '=' . $config->{metadata}->{$meta}
         if exists $config->{metadata}->{$meta};
 }; 
