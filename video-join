@@ -28,12 +28,12 @@ print $fh join( "\n", map { qq(file '$cwd/$_') } grep { !/yml$/i}@ARGV);
 close $fh;
 
 my @metadata;
-for my $meta (qw(title author show language)) {
-    push @metadata, '-metadata', $meta . '=' . $config->{$meta}
-        if exists $config->{$meta};
+for my $meta (keys %{ $config->{metadata} || {}})) {
+    push @metadata, '-metadata', $meta . '=' . $config->{metadata}->{$meta}
+        if exists $config->{metadata}->{$meta};
 }; 
 
-my @cmd = ( $ffmpeg => '-f', 'concat', '-safe', '0', '-i', $listname, '-c', 'copy', @metadata, $outname, '-y' );
+my @cmd = ( $ffmpeg => '-f', 'concat', '-safe', '0', '-i', $listname, '-c', 'copy', @metadata, '-movflags', '+faststart', $outname, '-y' );
 warn "@cmd" if $verbose;
 system(@cmd) == 0
     or die "$? / $!";
