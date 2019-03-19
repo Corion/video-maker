@@ -1,6 +1,7 @@
 JOIN=./video-join -v
 TRIM=./video-trim -v
 INSET=./video-inset -v
+SCALE=./video-scale -v
 HEADER_TRAILER=./video-header-trailer -v
 
 OVERLAY=gpw2019-overlay.png

@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use Getopt::Long;
+use YAML 'LoadFile';
+
+GetOptions(
+    'o=s' => \my $outname,
+    'v'   => \my $verbose,
+    'resolution=s'   => \my $resolution,
+);
+
+my ($movie) = grep !/\.yml/i, @ARGV;
+my ($config) = grep /\.yml/i, @ARGV;
+
+my ($width,$height) = $resolution =~ /(\d+)/g;
+
+if( $config ) {
+    $config = LoadFile( $config );
+};
+
+my $ffmpeg = 'ffmpeg';
+my @cmd = ("-i" => $movie );
+
+@cmd = ( $ffmpeg => @cmd, '-c:a', 'copy', '-vf', "scale=$width:$height", $outname, '-y' );
+warn "@cmd" if $verbose;
+system(@cmd) == 0
+    or die "$? / $!";
