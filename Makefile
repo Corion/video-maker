@@ -32,10 +32,25 @@ $(HEADER) $(TRAILER): gpw2019-sponsors.png
 %.trimmed.MP4: %.joined.MP4 %.yml
 	$(TRIM) $^ -o $@
 
-%.inset.MP4: %.trimmed.MP4 $(OVERLAY)
-	$(INSET) -x 600 -y 40 $^ -o $@
+%.start.MP4: %.trimmed.MP4
+	$(TRIM) $^ --start 00:00:00 --end 00:01:00 -o $@
 
-%.final.MP4: $(HEADER) %.inset.MP4 $(TRAILER) %.yml
+%.end.MP4: %.trimmed.MP4
+	$(TRIM) $^ --start -00:01:00 --end -00:00:00 -o $@
+
+%.middle-unscaled.MP4: %.trimmed.MP4
+	$(TRIM) $^ --start 00:01:00 --end -00:01:00 -o $@
+
+%.middle.MP4: %.middle-unscaled.MP4
+	$(SCALE) $^ --resolution $(TARGET_RESOLUTION) -o $@
+
+%.inset-start.MP4: %.start.MP4 $(OVERLAY)
+	$(INSET) --x 600 --y 40 $^ -o $@
+
+%.inset-end.MP4: %.end.MP4 $(OVERLAY)
+	$(INSET) --x 600 --y 40 $^ -o $@
+
+%.final.MP4: $(HEADER) %.inset-start.MP4 %.middle.MP4 %.inset-end.MP4 $(TRAILER) %.yml
 	$(JOIN) $^ -o $@
 	# Prepend header
 	# append trailer

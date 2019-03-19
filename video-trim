@@ -8,15 +8,64 @@ use YAML 'LoadFile';
 GetOptions(
     'o=s' => \my $outname,
     'v'   => \my $verbose,
+    'start=s'   => \my $start,
+    'end=s'   => \my $stop,
 );
 
 my ($movie) = grep !/\.yml/i, @ARGV;
 my ($config) = grep /\.yml/i, @ARGV;
 
-$config = LoadFile( $config );
+if( $config ) {
+    $config = LoadFile( $config );
+} else {
+    $config = {};
+};
 
-my $start = $config->{start};
-my $stop  = $config->{stop};
+$start ||= $config->{start};
+$stop  ||= $config->{stop};
+
+sub to_ts {
+    my( $ts ) = @_;
+    my $org = $ts;
+    my $res = 0;
+    while ($ts =~ s/^\s*(\d+)(?::|$)//) {
+        $res = $res * 60 + $1;
+    };
+    if( $ts =~ s/\.(\d+)//) {
+        $res += "0.$1";
+    };
+    die "Unparsed rest '$ts' in timestamp '$org'" if $ts;
+    $res;
+};
+
+sub to_hexagesimal {
+    my( $ts ) = @_;
+    my $res = sprintf '%02d:%02d:%02d.%03d',
+                  int( $ts / 3600 ),
+                  int( $ts /   60 ) % 60,
+                  int( $ts        ) % 60,
+                       $ts -int($ts);
+    $res
+}
+
+my $playlength;
+sub relative_to_abs {
+    my( $ts ) = @_;
+
+    my $res = $ts;
+
+    if( $ts =~ s/^-// ) {
+        $playlength ||= `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$movie"`;
+        $playlength =~ s!\s+$!!;
+
+        my $rel = to_ts( $ts );
+        $res = to_hexagesimal( $playlength - $rel );
+    };
+    $res
+};
+
+$start = relative_to_abs( $start );
+$stop = relative_to_abs( $stop );
 
 my $ffmpeg = 'ffmpeg';
 my @cmd = ("-i" => $movie, '-ss', $start, '-to', $stop );
