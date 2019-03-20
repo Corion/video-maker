@@ -1,10 +1,12 @@
 JOIN=./video-join -v
 TRIM=./video-trim -v
 INSET=./video-inset -v
+OVERLAY=./video-overlay -v
 SCALE=./video-scale -v
 METADATA=./video-metadata -v
 HEADER_TRAILER=./video-header-trailer -v
 
+SHOW=German Perl Workshop 2019
 OVERLAY=gpw2019-overlay.png
 HEADER=gpw2019-header.mkv
 TRAILER=gpw2019-trailer.mkv
@@ -26,18 +28,18 @@ AUDIO_SAMPLE_RATE=44100
 TARGET_RESOLUTION=1920x1080
 DURATION=5
 
-VIDEOS := $(subst .1.MP4,.final.MP4,$(wildcard *.1.MP4))
-JOINED_VIDEOS := $(subst .1.MP4,.joined.MP4,$(wildcard *.1.MP4))
-METADATA_FILES := $(subst .1.MP4,.yml,$(wildcard *.1.MP4))
+VIDEOS := $(subst .1.mkv,.final.mkv,$(wildcard *.1.mkv))
+JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard *.1.mkv))
+METADATA_FILES := $(subst .1.mkv,.yml,$(wildcard *.1.mkv))
 
-.PRECIOUS: %.yml %.middle.MP4
+.PRECIOUS: %.yml %.middle.mkv
 .PHONY: prepare-cut videos
 
 prepare-cut: $(JOINED_VIDEOS) $(METADATA_FILES)
 videos: $(VIDEOS)
 
-%.yml : | %.joined.MP4
-	$(METADATA) $^ $| -o $@
+%.yml : | %.joined.mkv
+	$(METADATA) $^ $| --show "$(SHOW)" --language deu -o $@
 
 $(HEADER) $(TRAILER): gpw2019-sponsors.png
 	# -v must come from the video, sample_rate as well
@@ -45,32 +47,21 @@ $(HEADER) $(TRAILER): gpw2019-sponsors.png
 		-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
 		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION) $@ -y
 
-%.joined.MP4: %.[1234].MP4
+%.joined.mkv: %.[1234].mkv
 	$(JOIN) $(sort $^) -o $@
 
-%.trimmed.MP4: %.joined.MP4 %.yml
+%.trimmed.mkv: %.joined.mkv %.yml
 	$(TRIM) $^ -o $@
 
-%.start.MP4: %.trimmed.MP4
-	$(TRIM) $^ --start 00:00:00 --end 00:01:00 -o $@
+%.middle.mkv: %.trimmed.mkv %.yml
+	$(OVERLAY) -x 569 -y 786 sponsors-fix.png $^ -o $@
 
-%.end.MP4: %.trimmed.MP4
-	$(TRIM) $^ --start -00:01:00 --end -00:00:00 -o $@
+#%.start.mkv: %.trimmed.mkv
+	#$(TRIM) $^ --start 00:00:00 --end 00:01:00 -o $@
 
-%.middle-unscaled.MP4: %.trimmed.MP4
-	$(TRIM) $^ --start 00:01:00 --end -00:01:00 -o $@
+#%.end.mkv: %.trimmed.mkv
+	#$(TRIM) $^ --start -00:01:00 --end -00:00:00 -o $@
 
-%.middle.MP4: %.middle-unscaled.MP4
-	$(SCALE) $^ --resolution $(TARGET_RESOLUTION) -o $@
-
-%.inset-start.MP4: %.start.MP4 $(OVERLAY)
-	$(INSET) --x 600 --y 40 $^ -o $@
-
-%.inset-end.MP4: %.end.MP4 $(OVERLAY)
-	$(INSET) --x 600 --y 40 $^ -o $@
-
-%.final.MP4: $(HEADER) %.inset-start.MP4 %.middle.MP4 %.inset-end.MP4 $(TRAILER) %.yml
+#%.final.MP4: $(HEADER) %.inset-start.MP4 %.middle.MP4 %.inset-end.MP4 $(TRAILER) %.yml
+%.final.mkv: $(HEADER) %.middle.mkv $(TRAILER) %.yml
 	$(JOIN) $^ -o $@
-	# Prepend header
-	# append trailer
-	# upload?!
