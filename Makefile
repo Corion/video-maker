@@ -23,9 +23,10 @@ JOINED_VIDEOS := $(subst .1.MP4,.joined.MP4,$(wildcard *.1.MP4))
 METADATA_FILES := $(subst .1.MP4,.yml,$(wildcard *.1.MP4))
 
 .PRECIOUS: %.yml %.middle.MP4
-.PHONY: prepare-cut
+.PHONY: prepare-cut videos
 
 prepare-cut: $(JOINED_VIDEOS) $(METADATA_FILES)
+videos: $(VIDEOS)
 
 %.yml : | %.joined.MP4
 	$(METADATA) $^ $| -o $@
