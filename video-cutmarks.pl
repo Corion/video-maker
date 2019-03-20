@@ -18,6 +18,7 @@ get '/' => sub {
 
 get '/video/<name>.joined.<ext>' => sub {
     my( $c ) = @_;
+    my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
     my $file = $c->param('name') . ".joined.$ext";
     $c->reply->static( $file );
