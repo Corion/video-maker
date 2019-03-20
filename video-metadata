@@ -17,8 +17,8 @@ GetOptions(
 my ($movie) = @ARGV;
 
 (my $title = $movie) =~ s!\.joined\.(MP4|mkv)$!!i;
-$title =~ s!^(20\d\d)-\d\d-\d\d-!!;
-$title =~ s!-! !g;
+$title =~ s!^(20\d\d)-\d\d-\d\d(_[012]\d-\d\d-\d\d)?[-_]!!;
+$title =~ s![-_]! !g;
 
 my $config = {
     start => '00:00:00.0000',
