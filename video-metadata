@@ -10,7 +10,8 @@ GetOptions(
     'v'   => \my $verbose,
     'author=s' => \my $author,
     'show=s' => \my $show,
-    'languate=s' => \my $language,
+    'language=s' => \my $language,
+    'url=s' => \my $talk_url,
 );
 
 my ($movie) = @ARGV;
@@ -27,6 +28,7 @@ my $config = {
         author => $author,
         show   => $show,
         language => $language,
+        url => $talk_url,
     },
 };
 
