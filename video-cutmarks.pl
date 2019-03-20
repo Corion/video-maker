@@ -3,9 +3,11 @@ use strict;
 use Mojolicious::Lite;
 use Mojolicious::Static;
 use Cwd;
+use YAML 'LoadFile', 'DumpFile';
 
-my $videos = Mojolicious::Static->new;
-push @{$videos->paths}, getcwd;
+plugin AutoReload => {};
+
+unshift @{ app->static->paths }, getcwd;
 
 get '/' => sub {
     my( $c ) = @_;
