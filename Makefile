@@ -37,7 +37,7 @@ $(HEADER) $(TRAILER): gpw2019-sponsors.png
 		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION) $@ -y
 
 %.joined.MP4: %.[1234].MP4
-	$(JOIN) $^ -o $@
+	$(JOIN) $(sort $^) -o $@
 
 %.trimmed.MP4: %.joined.MP4 %.yml
 	$(TRIM) $^ -o $@
