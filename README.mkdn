@@ -1,0 +1,14 @@
+# Video cut
+
+    make prepare-cut
+
+This prepares the metadata files and joins all the partial video files into
+large video files.
+    
+    morbo ./video-cutmarks.pl
+
+This launches the editor for editing the video metadata
+
+    make videos
+
+This (re)generates all videos as necessary.
