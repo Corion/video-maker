@@ -28,14 +28,15 @@ AUDIO_SAMPLE_RATE=44100
 TARGET_RESOLUTION=1920x1080
 DURATION=5
 
-VIDEOS := $(subst .1.mkv,.final.mkv,$(wildcard *.1.mkv))
 JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard *.1.mkv))
-METADATA_FILES := $(subst .1.mkv,.yml,$(wildcard *.1.mkv))
+VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard *.joined.mkv))
+METADATA_FILES := $(subst .joined.mkv,.yml,$(wildcard *.joined.mkv))
 
 .PRECIOUS: %.yml %.middle.mkv
 .PHONY: prepare-cut videos
 
-prepare-cut: $(JOINED_VIDEOS) $(METADATA_FILES)
+metadata: $(METADATA_FILES)
+prepare-cut: $(JOINED_VIDEOS) metadata
 videos: $(VIDEOS)
 
 %.yml : | %.joined.mkv
