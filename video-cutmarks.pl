@@ -64,9 +64,13 @@ __DATA__
 </body>
 </html>
 
+@@app.css
+video { width: 100% }
+
 @@cut.html.ep
 <html >
 <head>
+<link rel="stylesheet"  type="text/css" href="/app.css" />
 <script>
 var video;
 var playUntil;
