@@ -11,8 +11,8 @@ GetOptions(
     'x=s' => \my $x,
     'y=s' => \my $y,
 );
-my ($background) = grep !/\.mp4/i, @ARGV;
-my ($video) = grep /\.mp4/i, @ARGV;
+my ($background) = grep !/\.(mp4|mkv)/i, @ARGV;
+my ($video) = grep /\.(mp4|mkv)/i, @ARGV;
 
 my $ffmpeg = 'ffmpeg';
 

@@ -11,20 +11,24 @@ unshift @{ app->static->paths }, getcwd;
 
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.joined.MP4//i; $_ } glob '*.joined.MP4' ];
+    my $files = [ map { s/\.joined.(mkv|MP4)$//i; $_ } glob '*.joined.{MP4,mkv}' ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
 
-get '/video/<name>.joined.MP4' => sub {
+get '/video/<name>.joined.<ext>' => sub {
     my( $c ) = @_;
-    my $file = $c->param('name') . ".joined.MP4";
+    return unless $ext =~ /^(MP4|mkv)$/i;
+    my $file = $c->param('name') . ".joined.$ext";
     $c->reply->static( $file );
 };
 
 get '/cut/<name>' => sub {
     my( $c ) = @_;
-    my $file = $c->param('name') . ".joined.MP4";
+    my $file = $c->param('name') . ".joined.";
+    (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
+    return unless $ext;
+    $file .= $ext;
     my $info = $c->param('name') . '.yml';
     $info = LoadFile( $info );
     $c->stash( file => $file, %$info  );
@@ -33,7 +37,10 @@ get '/cut/<name>' => sub {
 
 post '/cut/<name>' => sub {
     my( $c ) = @_;
-    my $file = $c->param('name') . ".joined.MP4";
+    my $file = $c->param('name') . ".joined.";
+    (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
+    return unless $ext;
+    $file .= $ext;
     my $yml = $c->param('name') . '.yml';
     my $info = {
         start => $c->param('start'),
