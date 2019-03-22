@@ -1,7 +1,7 @@
 JOIN=./video-join -v
 TRIM=./video-trim -v
 INSET=./video-inset -v
-OVERLAY=./video-overlay -v
+STAMP=./video-overlay -v
 SCALE=./video-scale -v
 METADATA=./video-metadata -v
 HEADER_TRAILER=./video-header-trailer -v
@@ -55,7 +55,7 @@ $(HEADER) $(TRAILER): gpw2019-sponsors.png
 	$(TRIM) $^ -o $@
 
 %.middle.mkv: %.trimmed.mkv %.yml
-	$(OVERLAY) -x 569 -y 786 sponsors-fix.png $^ -o $@
+	$(STAMP) --framerate $(RATE) --x 569 --y 786 sponsors-fix.png $^ -o $@
 
 #%.start.mkv: %.trimmed.mkv
 	#$(TRIM) $^ --start 00:00:00 --end 00:01:00 -o $@
