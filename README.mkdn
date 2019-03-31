@@ -1,13 +1,76 @@
 # Video cut
 
+This is the rendering pipeline for recorded videos, as
+used for the German Perl Workshop videos.
+It produces videos of the same frame rate as the input
+videos. You will need to set up the `Makefile` with that frame
+rate as automatic extraction is not yet implemented.
+
+## File naming conventions
+
+This setup assumes the following naming convention:
+
+    YYYY-MM-DD-hh-mm-ss-talk-title.sequence.MP4
+    YYYY-MM-DD-hh-mm-ss-talk-title.sequence.mkv
+    YYYY-MM-DD-hh-talk-title.sequence.mkv
+
+The date/time is inconsequential, but all videos belonging
+to the same presentation need to share the same date/time
+value. If you are recording with OBS, this means renaming
+all files of the same presentation to the same timestamp.
+
+## Preparing the video trimming
+
+The first step is to run
+
     make prepare-cut
 
 This prepares the metadata files and joins all the partial video files into
 large video files.
+
+## Trimming the videos
+
+Trimming the videos at start and end is a process that
+requires human supervision. The trim editor is a web application
+that runs on the machine where the videos are located.
     
     morbo ./video-cutmarks.pl
 
-This launches the editor for editing the video metadata
+This launches the editor for editing the video metadata. Go through
+all the videos and set the start and end time. Not setting the
+start and end time will result in a crash.
+
+## Setting up the rest of the pipeline
+
+There are other scripts you can use to add a frame around
+the video or to paste an image over a part of the video.
+
+For each step, add an appropriate invocation in the `Makefile`
+chaining together the `Makefile` prerequisites.
+
+The main advantage of the Perl scripts is that they accept relative
+timestamps so you can easily add a frame / fade-in / fade-out 
+or title card 1 minute before the end of a video.
+
+### Background image / Frame
+
+    video-inset
+
+This script pastes the video over a static background image.
+
+### Overlay
+
+    video-overlay
+
+This script pastes a static image at a fixed position over the video.
+
+### Scaling
+
+    video-scale
+
+This script scales the input video to a given width/height.
+
+## Rendering the videos
 
     make videos
 
