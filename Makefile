@@ -28,9 +28,9 @@ AUDIO_SAMPLE_RATE=44100
 TARGET_RESOLUTION=1920x1080
 DURATION=5
 
-JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard *.1.mkv))
-VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard *.joined.mkv))
-METADATA_FILES := $(subst .joined.mkv,.yml,$(wildcard *.joined.mkv))
+JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard video/*.1.mkv))
+VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard video/*.joined.mkv))
+METADATA_FILES := $(subst .joined.mkv,.yml,$(wildcard video/*.joined.mkv))
 
 .PRECIOUS: %.yml %.middle.mkv
 .PHONY: prepare-cut videos
