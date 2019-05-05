@@ -4,3 +4,15 @@
 *.yml
 *.png
 *.swp
+MYMETA.*
+Makefile
+Makefile.old
+*.tar.gz
+*.bak
+pm_to_blib
+blib/
+App-video-maker-*/
+App-video-maker-*
+.releaserc
+cover_db
+MYMETA.*
