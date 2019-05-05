@@ -192,7 +192,7 @@ INSTALL
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Corion/$distlink?branch=master&svg=true)](https://ci.appveyor.com/project/Corion/$distlink)
 
 STATUS
-        update_file( 'README.mkdn', $readme_mkdn );
+        #update_file( 'README.mkdn', $readme_mkdn );
     };
 }
 
