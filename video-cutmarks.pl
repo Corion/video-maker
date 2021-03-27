@@ -239,7 +239,7 @@ function to_ts(sec) {
     var hr = dt.getHours()-1;
     var m = "0" + dt.getMinutes();
     var s = "0" + dt.getSeconds();
-    var ms = "0000" + (sec % 1);
+    var ms = "0000" + (sec *1000 % 1000);
     return hr+ ':' + m.substr(-2) + ':' + s.substr(-2) + "." + ms.substr(-4);
 };
 </script>
