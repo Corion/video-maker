@@ -19,11 +19,16 @@ to the same presentation need to share the same date/time
 value. If you are recording with OBS, this means renaming
 all files of the same presentation to the same timestamp.
 
+## Configuration for your event
+
+Create a new config file below `cfg/` , preferrably by copying and editing
+an existing config file.
+
 ## Preparing the video trimming
 
 The first step is to run
 
-    make prepare-cut
+    make -f make/Makefile CONFIG=cfg/gpw2021.cfg prepare-cut
 
 This prepares the metadata files and joins all the partial video files into
 large video files.
@@ -33,12 +38,33 @@ large video files.
 Trimming the videos at start and end is a process that
 requires human supervision. The trim editor is a web application
 that runs on the machine where the videos are located.
-    
-    morbo ./video-cutmarks.pl
+
+    CONFIG=cfg/gpw2021.cfg morbo ./video-cutmarks.pl
 
 This launches the editor for editing the video metadata. Go through
 all the videos and set the start and end time. Not setting the
 start and end time will result in a crash.
+
+Note that currently, Chrome is the best browsers for cutting files as it
+supports the `.mkv` format.
+
+The keybindings in the video cutter are:
+
+        // I -> go back to index page
+        // F -> save the current state
+        // Space -> pause/play
+        // Q -> step back a second
+        // E -> step forward a second
+        // S -> Use as start timestamp
+        // shift+S -> play from start timestamp
+        // D -> move start timestamp forward 1 second
+        // shift+D -> move start timestamp forward 0.1 second
+        // A -> move start timestamp backward 1 second
+        // shift+A -> move start timestamp backward 0.1 second
+        // Y/Z -> Use as stop timestamp, switch to end timestamp
+        // shift+Y / shift+Z -> use as stop timestamp, test replay
+        if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
+        if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
 
 ## Setting up the rest of the pipeline
 
@@ -49,7 +75,7 @@ For each step, add an appropriate invocation in the `Makefile`
 chaining together the `Makefile` prerequisites.
 
 The main advantage of the Perl scripts is that they accept relative
-timestamps so you can easily add a frame / fade-in / fade-out 
+timestamps so you can easily add a frame / fade-in / fade-out
 or title card 1 minute before the end of a video.
 
 ### Background image / Frame
