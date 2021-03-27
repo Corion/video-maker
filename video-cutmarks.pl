@@ -167,7 +167,7 @@ function ready() {
         // E -> step back a second
         if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
 
-        // S -> Use as start timestamp, switch to end timestamp
+        // S -> Use as start timestamp
         // shift+S -> play from start timestamp
         if(charCode == 83) {
             if( e.shiftKey ) {
@@ -181,7 +181,8 @@ function ready() {
         // A
         if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
 
-        // Y/Z -> Use as stop timestamp, switch to end timestamp
+        // X -> use as end timestamp
+        // shift+X -> play to end timestamp
         if(charCode == 88) {
             if( e.shiftKey ) {
                 video.pause();
@@ -192,9 +193,15 @@ function ready() {
                 document.getElementById("timer_stop").value = to_ts( video.currentTime );
             };
         };
+        // C -> move end timestamp
         if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
+        // Y/Z -> move end timestamp
         if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
 
+        // shift+G -> jump to end of video
+        if(charCode == 71) {
+            video.currentTime = video.duration;
+        };
     });
     document.getElementById("timer").focus();
 };
