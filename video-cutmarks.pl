@@ -256,7 +256,7 @@ function to_ts(sec) {
     </div>
 </div>
 <label for="title">Title</label><input type="text" name="title" value="<%= $metadata->{title} %>" /><br />
-<label for="artist">Author</label><input type="text" name="artist" value="<%= $metadata->{artist} %>" /><br />
+<label for="artist">Artist</label><input type="text" name="artist" value="<%= $metadata->{artist} %>" /><br />
 <label for="show">Show</label><input type="text" name="show" value="<%= $metadata->{show} %>" /><br />
 <label for="url">URL</label><input type="text" name="url" value="<%= $metadata->{url} %>" /><br />
 <label for="language">Language</label><input type="text" name="language" value="<%= $metadata->{language} %>" /><br />
