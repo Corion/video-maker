@@ -1,16 +1,4 @@
-JOIN=../video-join -v
-TRIM=../video-trim -v
-INSET=../video-inset -v
-STAMP=../video-overlay -v
-SCALE=../video-scale -v
-METADATA=../video-metadata -v
-HEADER_TRAILER=../video-header-trailer -v
-
-SHOW=German Perl Workshop 2019
-OVERLAY=../assets/gpw2019-overlay.png
-HEADER=../assets/gpw2019-header.mkv
-TRAILER=../assets/gpw2019-trailer.mkv
-ASSETS=../assets/gpw2019-sponsors.png
+CONFIG ?= cfg/gpw2021.cfg
 
 # Find rate of recorded video
 # ffprobe 2019-03-07-what-i-learned-about-sql-in-2018.joined.MP4 -select_streams v:0 -show_entries stream=r_frame_rate -of compact=p=0:nk=1
@@ -29,15 +17,24 @@ AUDIO_SAMPLE_RATE=44100
 TARGET_RESOLUTION=1920x1080
 DURATION=5
 
-JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard ../video/*.1.mkv))
-VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard ../video/*.joined.mkv))
-METADATA_FILES := $(subst .joined.mkv,.yml,$(wildcard ../video/*.joined.mkv))
+VIDEO=video
+
+include $(CONFIG)
+
+JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard $(VIDEO)/*.1.mkv))
+VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard $(VIDEO)/*.joined.mkv))
+METADATA_FILES := $(subst .joined.mkv,.yml,$(JOINED_VIDEOS))
 
 .PRECIOUS: %.yml %.middle.mkv
 .PHONY: prepare-cut videos
 
+$(info "$(JOINED_VIDEOS)")
+$(info "$(METADATA_FILES)")
+
 metadata: $(METADATA_FILES)
+
 prepare-cut: $(JOINED_VIDEOS) metadata
+
 videos: $(VIDEOS)
 
 %.yml : | %.joined.mkv
