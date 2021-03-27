@@ -4,14 +4,37 @@ use Mojolicious::Lite;
 use Mojolicious::Static;
 use Cwd;
 use YAML 'LoadFile', 'DumpFile';
+use File::Basename;
 
 plugin AutoReload => {};
 
 unshift @{ app->static->paths }, getcwd;
 
+my $config;
+if( ! $ENV{CONFIG}) {
+    die "No CONFIG= given!";
+};
+
+open my $fh, '<', $ENV{CONFIG}
+    or die "Couldn't read config file '$ENV{CONFIG}'";
+my %config = map { /^\s*([^#].*?)=(.*)/ ? ($1 => $2) : () } <$fh>;
+
+app->types->type( MP4 => 'video/mp4' );
+app->types->type( mkv => 'video/webm' );
+
+sub video_file {
+    my ($fn) = @_;
+    return $config{VIDEO} . '/' . $fn;
+}
+
+sub yaml_file {
+    my ($fn) = @_;
+    return $config{VIDEO} . '/' . $fn;
+}
+
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.joined.(mkv|MP4)$//i; $_ } glob '*.joined.{MP4,mkv}' ];
+    my $files = [ map { s/\.joined.(mkv|MP4)$//i; basename($_) } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
@@ -20,29 +43,31 @@ get '/video/<name>.joined.<ext>' => sub {
     my( $c ) = @_;
     my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
-    my $file = $c->param('name') . ".joined.$ext";
+    my $file = video_file( $c->param('name') . ".joined.$ext" );
     $c->reply->static( $file );
 };
 
 get '/cut/<name>' => sub {
     my( $c ) = @_;
-    my $file = $c->param('name') . ".joined.";
+    my $file = $config{VIDEO} .'/'. $c->param('name') . ".joined.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
+
     return unless $ext;
     $file .= $ext;
-    my $info = $c->param('name') . '.yml';
+
+    my $info = yaml_file($c->param('name') . '.yml');
     $info = LoadFile( $info );
-    $c->stash( file => $file, %$info  );
+    $c->stash( file => basename($file), %$info  );
     $c->render( template => 'cut' );
 };
 
 post '/cut/<name>' => sub {
     my( $c ) = @_;
-    my $file = $c->param('name') . ".joined.";
+    my $file = $config{VIDEO} .'/'. $c->param('name') . ".joined.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
     return unless $ext;
     $file .= $ext;
-    my $yml = $c->param('name') . '.yml';
+    my $yml = yaml_file($c->param('name') . '.yml');
     my $info = {
         start => $c->param('start'),
         stop  => $c->param('stop'),
