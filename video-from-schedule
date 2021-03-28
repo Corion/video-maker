@@ -1,0 +1,57 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use Getopt::Long;
+use YAML 'DumpFile';
+use File::Basename;
+
+GetOptions(
+    'o=s' => \my $outname,
+    'v'   => \my $verbose,
+    'artist=s' => \my $artist,
+    'show=s' => \my $show,
+    'language=s' => \my $language,
+    'url=s' => \my $talk_url,
+    'schedule=s' => \my $schedule_file,
+);
+
+my ($movie) = @ARGV;
+
+(my $title = $movie) =~ s!\.joined\.(MP4|mkv)$!!i;
+$title =~ s!^(20\d\d)-\d\d-\d\d(_[012]\d-\d\d-\d\d)?[-_]!!;
+$title =~ s![-_]! !g;
+
+if( $schedule_file ) {
+    require C3VOC::Schedule;
+    require Time::Piece;
+
+    my $name = basename $movie;
+
+    if( $name =~ /^(20\d\d-\d\d-\d\d)[- T](\d\d-\d\d-\d\d)\b/ ) {
+        my $ts = "$1T$2+0100";
+        #warn "Found timestamp $ts";
+        my $start_time = Time::Piece->strptime($ts,'%Y-%m-%dT%H-%M-%S%z');
+
+        (my $talk) = grep { $_->{date} == $start_time->epoch } C3VOC::Schedule::read_schedule_xml( $schedule_file );
+
+        if( $talk ) {
+            $talk_url = "https://act.yapc.eu/gpw2021/talk/$talk->{id}";
+            $title    = $talk->{title};
+            $artist   = $talk->{speaker};
+        };
+    };
+}
+
+my $config = {
+    start => '00:00:00.0000',
+    stop  => '00:00:00.0000',
+    metadata => {
+        title => $title,
+        artist => $artist,
+        show   => $show,
+        language => $language,
+        url => $talk_url,
+    },
+};
+DumpFile( $outname, $config );

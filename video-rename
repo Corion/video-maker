@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use 5.012;
+
+use Getopt::Long;
+use YAML 'DumpFile';
+use File::Basename;
+use File::Glob;
+use Time::Piece;
+use Text::CleanFragment;
+use lib 'lib';
+use C3VOC::Schedule;
+
+GetOptions(
+    'v'   => \my $verbose,
+    'schedule=s' => \my $schedule_file,
+    'video-directory=s' => \my $video_dir,
+    'extension=s' => \my @extensions,
+);
+
+if( ! @extensions ) {
+    @extensions = qw(mp4 MP4 mkv);
+};
+
+my $spec = "{" . join( ",", @extensions ). "}";
+my @files = glob ($video_dir . '/*.' . $spec);
+my @presentations = C3VOC::Schedule::read_schedule_xml( $schedule_file );
+
+for my $movie (@files) {
+    my $name = basename $movie;
+    if( $name !~ /\.(\w+)$/) {
+        next;
+    };
+    my $ext = $1;
+
+    if( $name =~ /^(20\d\d-\d\d-\d\d)[- T](\d\d-\d\d-\d\d)\b/ ) {
+        my ($date,$time) = ($1,$2);
+        my $ts = "${date}T${time}+0100";
+        #warn "Found timestamp $ts";
+        my $start_time = Time::Piece->strptime($ts,'%Y-%m-%dT%H-%M-%S%z');
+
+        (my $talk) = grep { $_->{date} == $start_time->epoch } @presentations;
+
+        next unless $talk;
+
+        my $title    = clean_fragment( $talk->{title} );
+        my $artist   = clean_fragment( $talk->{speaker} );
+
+        my $part = 1;
+        my $target;
+
+        do {
+            $target = sprintf '%s_%s-%s-%s.%s.%s',
+                         $date,
+                         $time,
+                         $artist,
+                         $title,
+                         $part++,
+                         $ext,
+                         ;
+        } until ! -f $target;
+
+        my $dir = dirname $movie;
+        rename $movie => "$dir/$target";
+
+    };
+}
