@@ -1,0 +1,42 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use 5.012;
+
+use Getopt::Long;
+use YAML 'LoadFile';
+use File::Basename;
+use lib 'lib';
+
+GetOptions(
+    'o=s' => \my $outname,
+    'config|c=s' => \my $config,
+    'template=s' => \my $template,
+    'v'   => \my $verbose,
+);
+
+my %escape = (
+    '<' => '&lt;',
+    '>' => '&gt;',
+    '&' => '&amp;',
+);
+
+sub xml_escape {
+    map {
+        s!([<>&])!$escape{ $1 }!ge
+    } @_
+}
+
+my $cfg = LoadFile( $config );
+
+open my $fh, '<:utf8', $template
+    or die "Couldn't read '$template': $!";
+open my $out_fh, '>:utf8', $outname
+    or die "Couldn't write '$outname': $!";
+
+while( my $line = <$fh>) {
+    $line =~ s!\[%\s*(\w+)\s*%\]!xml_escape($cfg->{metadata}->{$1} // "$1")!ge;
+    print $out_fh $line;
+};
+
+close $out_fh;

@@ -15,7 +15,8 @@ AUDIO_RATE=256k
 AUDIO_SAMPLE_RATE=44100
 # ffprobe -v error -select_streams v:0 -show_entries stream=height,width -of csv=s=x:p=0
 TARGET_RESOLUTION=1920x1080
-DURATION=5
+DURATION_HEADER=5
+DURATION_TRAILER=30
 
 VIDEO=video
 
@@ -28,23 +29,40 @@ METADATA_FILES := $(subst .joined.mkv,.yml,$(JOINED_VIDEOS))
 .PRECIOUS: %.yml %.middle.mkv
 .PHONY: prepare-cut videos
 
-$(info "$(JOINED_VIDEOS)")
-$(info "$(METADATA_FILES)")
-
 metadata: $(METADATA_FILES)
 
 prepare-cut: $(JOINED_VIDEOS) metadata
 
 videos: $(VIDEOS)
 
+%.png: %.svg
+	inkscape --export-type=png -d 25.40 $< -o $@
+
 %.yml : | %.joined.mkv
 	$(METADATA) $^ $| --show "$(SHOW)" --language deu -o $@
 
-$(HEADER) $(TRAILER): $(ASSETS)
+$(TRAILER): $(TRAILER_ASSETS)
+	# -v must come from the video, sample_rate as well
+	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
+		-loop 1 -framerate 1/15 -r $(RATE) -i $< -s $(TARGET_RESOLUTION) \
+		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) $@ -y
+
+#$(HEADER): $(HEADER_ASSETS)
+#	# -v must come from the video, sample_rate as well
+#	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
+#		-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
+#		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
+
+%.title.svg: %.yml
+	$(TITLEGEN) --template $(TITLECARD) --config $< -o $@
+
+%.title.png: %.title.svg
+
+%.title.mkv: %.title.png
 	# -v must come from the video, sample_rate as well
 	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
 		-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
-		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION) $@ -y
+		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
 
 %.joined.mkv: %.[1234].mkv
 	$(JOIN) $(sort $^) -o $@
@@ -62,5 +80,5 @@ $(HEADER) $(TRAILER): $(ASSETS)
 	#$(TRIM) $^ --start -00:01:00 --end -00:00:00 -o $@
 
 #%.final.MP4: $(HEADER) %.inset-start.MP4 %.middle.MP4 %.inset-end.MP4 $(TRAILER) %.yml
-%.final.mkv: $(HEADER) %.middle.mkv $(TRAILER) %.yml
+%.final.mkv: %.title.mkv %.middle.mkv $(TRAILER) %.yml
 	$(JOIN) $^ -o $@
