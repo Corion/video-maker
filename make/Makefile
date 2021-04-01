@@ -71,7 +71,7 @@ $(TRAILER): $(TRAILER_ASSETS)
 	$(TRIM) $^ -o $@
 
 %.middle.mkv: %.trimmed.mkv %.yml
-	cp $^ $@
+	cp $< $@
 
 #%.start.mkv: %.trimmed.mkv
 	#$(TRIM) $^ --start 00:00:00 --end 00:01:00 -o $@
