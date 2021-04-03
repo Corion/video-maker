@@ -31,7 +31,7 @@ my @metadata;
 for my $meta (keys %{ $config->{metadata} || {} }) {
     push @metadata, '-metadata', $meta . '=' . $config->{metadata}->{$meta}
         if exists $config->{metadata}->{$meta};
-}; 
+};
 
 my @cmd = ( $ffmpeg => '-f', 'concat', '-safe', '0', '-i', $listname, '-c', 'copy', @metadata, '-movflags', '+faststart', $outname, '-y' );
 warn "@cmd" if $verbose;

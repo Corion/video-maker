@@ -22,9 +22,7 @@ my %escape = (
 );
 
 sub xml_escape {
-    map {
-        s!([<>&])!$escape{ $1 }!ge
-    } @_
+    return $_[0] =~ s!([<>&])!$escape{ $1 }!gre
 }
 
 my $cfg = LoadFile( $config );
@@ -40,3 +38,19 @@ while( my $line = <$fh>) {
 };
 
 close $out_fh;
+
+# Now use Inkscape (mwahahahha) to center the title and artist
+#
+
+my @elements = (qw(
+    text-title
+    text-artist
+));
+
+my @commands = (qw(
+    EditSelectAll
+    AlignHorizontalCenter
+    FileSave
+));
+
+system(inkscape => $outname, "--batch-process", "--with-gui", "--select", join(",",@elements), "--verb",join( ';', @commands ));
