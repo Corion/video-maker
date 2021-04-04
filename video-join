@@ -33,7 +33,17 @@ for my $meta (keys %{ $config->{metadata} || {} }) {
         if exists $config->{metadata}->{$meta};
 };
 
-my @cmd = ( $ffmpeg => '-f', 'concat', '-safe', '0', '-i', $listname, '-c', 'copy', @metadata, '-movflags', '+faststart', $outname, '-y' );
+my @cmd = ( $ffmpeg =>
+            '-f', 'concat',
+            '-analyzeduration', 25000,
+            '-safe', '0',
+            '-i', $listname,
+            '-c', 'copy',
+            @metadata,
+            '-movflags',
+            '+faststart',
+            $outname, '-y'
+);
 warn "@cmd" if $verbose;
 system(@cmd) == 0
     or die "$? / $!";
