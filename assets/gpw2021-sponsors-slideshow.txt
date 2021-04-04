@@ -1,0 +1,5 @@
+file 'gpw2021-sponsors-1-ui.png'
+duration 15
+file 'gpw2021-sponsors-2-strato.png'
+duration 15
+file 'gpw2021-sponsors-2-strato.png'
