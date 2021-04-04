@@ -41,11 +41,15 @@ videos: $(VIDEOS)
 %.yml : | %.joined.mkv
 	$(METADATA) $^ $| --show "$(SHOW)" --language deu -o $@
 
-$(TRAILER): $(TRAILER_ASSETS)
+$(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
-	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-		-loop 1 -framerate 1/15 -r $(RATE) -i $< -s $(TARGET_RESOLUTION) \
-		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) $@ -y
+	#		-s "$(TARGET_RESOLUTION)" \
+	ffmpeg \
+		-f concat -i $(TRAILER_SLIDESHOW) \
+		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
+		-vf scale=$(TARGET_RESOLUTION),fps=25 \
+		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) \
+		$@ -y
 
 #$(HEADER): $(HEADER_ASSETS)
 #	# -v must come from the video, sample_rate as well
@@ -60,9 +64,18 @@ $(TRAILER): $(TRAILER_ASSETS)
 
 %.title.mkv: %.title.png
 	# -v must come from the video, sample_rate as well
-	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-		-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
-		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
+	#ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
+	#	-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
+	#	-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
+	ffmpeg -i $(ANIMATED_TITLE) \
+	       -i $< \
+		   -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
+	       -filter_complex "[1]format=argb,geq=r='r(X,Y)':a='0.5*alpha(X,Y)'[b];[0:v][b] overlay" -s $(TARGET_RESOLUTION) \
+	       -r $(RATE) \
+	       -t 4 \
+	       -c:a aac \
+	       -c:v libx264 -pix_fmt yuv420p \
+	       "$@" -y
 
 %.joined.mkv: %.[1234].mkv
 	$(JOIN) $(sort $^) -o $@
