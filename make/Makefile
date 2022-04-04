@@ -6,6 +6,10 @@ CONFIG ?= cfg/gpw2021.cfg
 #RATE=29.97
 #RATE=30000/1001
 
+# Find timestamp offsets of sound and video in a stream:
+# ffprobe -v error -show_streams <file> | egrep 'start_pts|start_time'
+# ideally you should have both at 0 :)
+
 # ffprobe -v 0 -of csv=p=0 -select_streams v:0 -show_entries stream=r_frame_rate
 RATE=25/1
 
@@ -44,11 +48,13 @@ videos: $(VIDEOS)
 $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
 	#		-s "$(TARGET_RESOLUTION)" \
+	echo $(AUDIO_SAMPLE_RATE)
 	ffmpeg \
 		-f concat -i $(TRAILER_SLIDESHOW) \
 		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
 		-vf scale=$(TARGET_RESOLUTION),fps=25 \
-		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) \
+		-c:v libx264 -pix_fmt yuv420p \
+		-c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) \
 		$@ -y
 
 #$(HEADER): $(HEADER_ASSETS)
@@ -73,7 +79,7 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	       -filter_complex "[1]format=argb,geq=r='r(X,Y)':a='0.5*alpha(X,Y)'[b];[0:v][b] overlay" -s $(TARGET_RESOLUTION) \
 	       -r $(RATE) \
 	       -t 4 \
-	       -c:a aac \
+	       -c:a aac -ar $(AUDIO_SAMPLE_RATE) \
 	       -c:v libx264 -pix_fmt yuv420p \
 	       "$@" -y
 
