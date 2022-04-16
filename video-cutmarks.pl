@@ -2,6 +2,7 @@
 use strict;
 use Mojolicious::Lite;
 use Mojolicious::Static;
+use Mojo::Util 'url_escape', 'url_unescape';
 use Cwd;
 use YAML 'LoadFile', 'DumpFile';
 use File::Basename;
@@ -34,28 +35,37 @@ sub yaml_file {
 
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.joined.(mkv|MP4)$//i; basename($_) } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
+    my $files = [ map { s/\.joined.(mkv|MP4)$//i; encode_name(basename($_)) } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
+
+sub decode_name {
+    my( $name ) = @_;
+    return url_unescape($name)
+}
+sub encode_name {
+    my( $name ) = @_;
+    return url_escape($name)
+}
 
 get '/video/<name>.joined.<ext>' => sub {
     my( $c ) = @_;
     my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
-    my $file = video_file( $c->param('name') . ".joined.$ext" );
+    my $file = video_file( decode_name($c->param('name')) . ".joined.$ext" );
     $c->reply->static( $file );
 };
 
 get '/cut/<name>' => sub {
     my( $c ) = @_;
-    my $file = $config{VIDEO} .'/'. $c->param('name') . ".joined.";
+    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".joined.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
 
     return unless $ext;
     $file .= $ext;
 
-    my $info = yaml_file($c->param('name') . '.yml');
+    my $info = yaml_file(decode_name($c->param('name')) . '.yml');
     $info = LoadFile( $info );
     $c->stash( file => basename($file), %$info  );
     $c->render( template => 'cut' );
@@ -63,11 +73,11 @@ get '/cut/<name>' => sub {
 
 post '/cut/<name>' => sub {
     my( $c ) = @_;
-    my $file = $config{VIDEO} .'/'. $c->param('name') . ".joined.";
+    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".joined.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
     return unless $ext;
     $file .= $ext;
-    my $yml = yaml_file($c->param('name') . '.yml');
+    my $yml = yaml_file(decode_name($c->param('name')) . '.yml');
     my $info = {
         start => $c->param('start'),
         stop  => $c->param('stop'),
@@ -80,14 +90,16 @@ post '/cut/<name>' => sub {
         },
     };
     DumpFile( $yml, $info );
-    $c->redirect_to($c->url_for('/cut/' . $c->param('name')));
+    $c->redirect_to($c->url_for('/cut/' . decode_name($c->param('name'))));
 };
 
 app->start;
 
 __DATA__
 @@index.html.ep
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8"/>
 <body>
 <ol>
 %for my $file (@$files) {
@@ -101,8 +113,10 @@ __DATA__
 video { width: 100% }
 
 @@cut.html.ep
-<html >
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="utf-8"/>
 <link rel="stylesheet"  type="text/css" href="/app.css" />
 <script>
 var video;
@@ -250,7 +264,7 @@ function to_ts(sec) {
     <source src="/video/<%= $file %>" type='video/mp4' />
 </video>
 
-<form method="POST" enctype="multipart/form-data" id="thatform">
+<form method="POST" enctype="multipart/form-data" id="thatform" accept-charset="utf-8">
 <div id="controls">
     <div id="timer">00:00:00.0000</div>
     <button onclick="javascript:stepff('timer_start', -0.1); return false">&lt;</button>
