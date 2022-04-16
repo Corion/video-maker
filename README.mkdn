@@ -19,6 +19,15 @@ to the same presentation need to share the same date/time
 value. If you are recording with OBS, this means renaming
 all files of the same presentation to the same timestamp.
 
+Note that the EPO recording machines produce files with spaces
+in their name. Since this setup relies on `make`, spaces
+in filenames are not supported. Rename them:
+
+```
+for f in *.mkv; do if [[ "$f" =~ (\ ) ]]; then echo mv -i "$f" "${f/ /-}"; fi; done
+
+```
+
 ## Configuration for your event
 
 Create a new config file below `cfg/` , preferrably by copying and editing
