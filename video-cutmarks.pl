@@ -178,7 +178,7 @@ function ready() {
         if(charCode == 32) { if (video.paused) { video.play() } else { video.pause() }};
         // Q -> step back a second
         if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
-        // E -> step back a second
+        // E -> step forward a second
         if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
 
         // S -> Use as start timestamp
@@ -284,5 +284,21 @@ function to_ts(sec) {
 <button type="submit" id="btnSave">Save</button>
 </form>
 
+<ul>
+<li><kbd>q</kbd> - move start point one second earlier</li>
+<li><kbd>shift+q</kbd> - move start point 0.1 second earlier</li>
+<li><kbd>e</kbd> - move start point one second later</li>
+<li><kbd>shift+e</kbd> - move start point 0.1 second later</li>
+<li><kbd>s</kbd> - set video start point</li>
+<li><kbd>shift+S</kbd> - play video from start point</li>
+<li><kbd>d</kbd> - step video play position 1 second earlier</li>
+<li><kbd>a</kbd> - step video play position 1 second later</li>
+<li><kbd>x</kbd> - use current position as end position</li>
+<li><kbd>y/z</kbd> - move end position earlier</li>
+<li><kbd>c</kbd> - move end position later</li>
+<li><kbd>shift+g</kbd> - jump to end of video</li>
+<li><kbd>f</kbd> - save current cutmarks</li>
+<li><kbd>i</kbd> - go back to the index page</li>
+</ul>
 </body>
 </html>
