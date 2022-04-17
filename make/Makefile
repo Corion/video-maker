@@ -23,8 +23,8 @@ AUDIO_RATE=256k
 AUDIO_SAMPLE_RATE=44100
 # ffprobe -v error -select_streams v:0 -show_entries stream=height,width -of csv=s=x:p=0
 TARGET_RESOLUTION=1920x1080
-DURATION_HEADER=5
-DURATION_TRAILER=30
+DURATION_HEADER=10
+DURATION_TRAILER=75
 
 VIDEO=video
 
