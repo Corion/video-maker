@@ -1,0 +1,9 @@
+file 'gpw2022-sponsors-1-ui.png'
+duration 15
+file 'gpw2022-sponsors-2-otobo.png'
+duration 15
+file 'gpw2022-sponsors-3-strato.png'
+duration 15
+file 'gpw2022-sponsors-4-geizhals.png'
+duration 15
+file 'gpw2022-sponsors-5-perl-services.png'
