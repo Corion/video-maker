@@ -15,6 +15,7 @@ GetOptions(
     'show=s' => \my $show,
     'language=s' => \my $language,
     'url=s' => \my $talk_url,
+    'url-base=s' => \my $url_base,
     'schedule=s' => \my $schedule_file,
 );
 
@@ -23,6 +24,8 @@ my ($movie) = @ARGV;
 (my $title = $movie) =~ s!\.joined\.(MP4|mkv)$!!i;
 $title =~ s!^(20\d\d)-\d\d-\d\d(_[012]\d-\d\d-\d\d)?[-_]!!;
 $title =~ s![-_]! !g;
+
+$url_base ||= 'https://act.yapc.eu/gpw2022/talk/';
 
 if( $schedule_file ) {
     require C3VOC::Schedule;
@@ -46,7 +49,7 @@ if( $schedule_file ) {
         my $talk = $previous[-1];
 
         if( $talk ) {
-            $talk_url = "https://act.yapc.eu/gpw2022/talk/$talk->{id}";
+            $talk_url = "$talk_base/$talk->{id}";
             $title    = $talk->{title};
             $artist   = $talk->{speaker};
         };

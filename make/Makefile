@@ -49,7 +49,7 @@ videos: $(VIDEOS)
 	inkscape --export-type=png -d 25.40 $< -o $@
 
 %.yml : | %.joined.mkv
-	$(METADATA) $^ $| --show "$(SHOW)" --language deu -o $@
+	$(METADATA) $^ $| --show "$(SHOW)" --language deu --url-base "$(ACT_BASE)" -o $@
 
 $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
