@@ -45,12 +45,18 @@ close $out_fh;
 my @elements = (qw(
     text-title
     text-artist
+    text-container
 ));
 
-my @commands = (qw(
-    EditSelectAll
+my $elements = join ",",@elements;
+my @commands = (
+    qw(
     AlignHorizontalCenter
     FileSave
 ));
 
-system(inkscape => $outname, "--batch-process", "--with-gui", "--select", join(",",@elements), "--verb",join( ';', @commands ));
+my @cmd =( inkscape => $outname, "--batch-process", "--with-gui", "--select", join(",",@elements), "--verb", join ";", @commands );
+warn "[@cmd]";
+system(@cmd );
+#system(inkscape => $outname, "--batch-process", "--with-gui", "--verb",join( ';', @commands ));
+#system(inkscape => $outname, "--batch-process", "--with-gui", "--verb",join( ';', @commands ));

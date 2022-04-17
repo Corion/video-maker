@@ -4,6 +4,7 @@ use warnings;
 
 use Getopt::Long;
 use Cwd;
+use Text::ParseWords;
 
 GetOptions(
     'o=s' => \my $outname,
@@ -14,9 +15,11 @@ GetOptions(
 my ($background) = grep !/\.(mp4|mkv)/i, @ARGV;
 my ($video) = grep /\.(mp4|mkv)/i, @ARGV;
 
-my $ffmpeg = 'ffmpeg';
+my $ffmpeg = $ENV{FFMPEG} || 'ffmpeg';
+my @ffmpeg_options = shellwords( $ENV{FFMPEG_OPT});
 
 my @cmd = ( $ffmpeg => 
+             @ffmpeg_options,
              '-loop', '1',
              '-framerate', '30000/1001',
              '-i', $background,

@@ -4,6 +4,7 @@ use warnings;
 
 use Getopt::Long;
 use YAML 'LoadFile';
+use Text::ParseWords;
 
 GetOptions(
     'o=s' => \my $outname,
@@ -20,10 +21,13 @@ if( $config ) {
     $config = LoadFile( $config );
 };
 
-my $ffmpeg = 'ffmpeg';
+my $ffmpeg = $ENV{FFMPEG} || 'ffmpeg';
+my @ffmpeg_options = shellwords( $ENV{FFMPEG_OPT});
+
 my @cmd = ("-i" => $movie );
 
-@cmd = ( $ffmpeg => @cmd, '-c:a', 'copy', '-vf', "scale=$width:$height", $outname, '-y' );
+@cmd = ( $ffmpeg => @ffmpeg_options,
+         @cmd, '-c:a', 'copy', '-vf', "scale=$width:$height", $outname, '-y' );
 warn "@cmd" if $verbose;
 system(@cmd) == 0
     or die "$? / $!";

@@ -1,4 +1,8 @@
 CONFIG ?= cfg/gpw2021.cfg
+FFMPEG ?= $(which ffmpeg)
+FFPROBE ?= $(which ffprobe)
+SCALE ?= scale
+X264 ?= libx264
 
 # Find rate of recorded video
 # ffprobe 2019-03-07-what-i-learned-about-sql-in-2018.joined.MP4 -select_streams v:0 -show_entries stream=r_frame_rate -of compact=p=0:nk=1
@@ -49,11 +53,11 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
 	#		-s "$(TARGET_RESOLUTION)" \
 	echo $(AUDIO_SAMPLE_RATE)
-	ffmpeg \
+	$FFPMEG \
 		-f concat -i $(TRAILER_SLIDESHOW) \
 		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-		-vf scale=$(TARGET_RESOLUTION),fps=25 \
-		-c:v libx264 -pix_fmt yuv420p \
+		-vf $(SCALE)=$(TARGET_RESOLUTION),fps=25 \
+		-c:v $(X264) -pix_fmt yuv420p \
 		-c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) \
 		$@ -y
 
@@ -61,27 +65,27 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 #	# -v must come from the video, sample_rate as well
 #	ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
 #		-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
-#		-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
+#		-c:v $(X264) -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
 
-%.title.svg: %.yml
+%.titlecard.svg: %.yml $(TITLECARD)
 	$(TITLEGEN) --template $(TITLECARD) --config $< -o $@
 
-%.title.png: %.title.svg
+%.titlecard.png: %.titlecard.svg $(TITLECARD)
 
-%.title.mkv: %.title.png
-	# -v must come from the video, sample_rate as well
-	#ffmpeg -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-	#	-loop 1 -framerate $(RATE) -i $< -s $(TARGET_RESOLUTION) \
-	#	-c:v libx264 -pix_fmt yuv420p -c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_HEADER) $@ -y
-	ffmpeg -i $(ANIMATED_TITLE) \
-	       -i $< \
-		   -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-	       -filter_complex "[1]format=argb,geq=r='r(X,Y)':a='0.5*alpha(X,Y)'[b];[0:v][b] overlay" -s $(TARGET_RESOLUTION) \
-	       -r $(RATE) \
-	       -t 4 \
-	       -c:a aac -ar $(AUDIO_SAMPLE_RATE) \
-	       -c:v libx264 -pix_fmt yuv420p \
-	       "$@" -y
+%.titlecard.mkv: %.titlecard.png $(TITLECARD)
+	# Titlecard animieren
+	$FFMPEG \
+		-i $< \
+		-loop 1 -framerate $(RATE) -i $< \
+		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
+		-vf $(SCALE)=$(TARGET_RESOLUTION),fps=25 \
+	    -video_size $(TARGET_RESOLUTION) \
+		-c:v $(X264) -pix_fmt yuv420p \
+		-c:a aac -b:a $(AUDIO_RATE) -t 5 \
+		$@ -y
+
+%.title.mkv: %.titlecard.mkv $(ANIMATED_TITLE)
+	$(JOIN) $(ANIMATED_TITLE) $< -o $@
 
 %.joined.mkv: %.[1234].mkv
 	$(JOIN) $(sort $^) -o $@
@@ -91,12 +95,6 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 
 %.middle.mkv: %.trimmed.mkv %.yml
 	cp $< $@
-
-#%.start.mkv: %.trimmed.mkv
-	#$(TRIM) $^ --start 00:00:00 --end 00:01:00 -o $@
-
-#%.end.mkv: %.trimmed.mkv
-	#$(TRIM) $^ --start -00:01:00 --end -00:00:00 -o $@
 
 #%.final.MP4: $(HEADER) %.inset-start.MP4 %.middle.MP4 %.inset-end.MP4 $(TRAILER) %.yml
 %.final.mkv: %.title.mkv %.middle.mkv $(TRAILER) %.yml

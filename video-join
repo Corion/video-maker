@@ -6,13 +6,16 @@ use Getopt::Long;
 use YAML 'LoadFile';
 use File::Temp 'tempfile';
 use Cwd;
+use Text::ParseWords;
 
 GetOptions(
-    'o=s' => \my $outname,
-    'v'   => \my $verbose,
+    'o=s'  => \my $outname,
+    'safe' => \my $safe,
+    'v'    => \my $verbose,
 );
 
-my $ffmpeg = 'ffmpeg';
+my $ffmpeg = $ENV{FFMPEG} || 'ffmpeg';
+my @ffmpeg_options = shellwords( $ENV{FFMPEG_OPT});
 
 my ($fh, $listname) = tempfile(UNLINK => 1);
 my $cwd = getcwd();
@@ -24,6 +27,8 @@ if( $config ) {
     $config = {}
 };
 
+print "Join: $_\n" for @ARGV;
+
 print $fh join( "\n", map { qq(file '$cwd/$_') } grep { !/yml$/i}@ARGV);
 close $fh;
 
@@ -34,13 +39,15 @@ for my $meta (keys %{ $config->{metadata} || {} }) {
 };
 
 my @cmd = ( $ffmpeg =>
+            @ffmpeg_options,
             '-f', 'concat',
             '-analyzeduration', 25000,
-            '-safe', '0',
+            '-safe', ($safe ? '1' : '0' ),
             '-i', $listname,
            #'-c', 'copy',
            '-c:a', 'aac',
-	       '-c:v', 'libx264',
+	       #'-c:v', 'libx264',
+	       '-c:v', 'h264_nvenc',
             @metadata,
             '-movflags',
             '+faststart',
