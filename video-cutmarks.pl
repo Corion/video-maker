@@ -2,7 +2,7 @@
 use strict;
 use Mojolicious::Lite;
 use Mojolicious::Static;
-use Mojo::Util 'url_escape', 'url_unescape', 'decode';
+use Mojo::Util 'url_escape', 'url_unescape', 'decode', 'encode';
 use Cwd;
 use YAML 'LoadFile', 'DumpFile';
 use File::Basename;
@@ -35,7 +35,7 @@ sub yaml_file {
 
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.joined.(mkv|MP4)$//i; { file => encode_name(basename($_)), name => decode('UTF-8', $_) } } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
+    my $files = [ map { s/\.joined.(mkv|MP4)$//i; { file => encode_name(basename(decode('UTF-8',$_))), name => decode('UTF-8', basename($_)) } } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
@@ -49,7 +49,7 @@ sub encode_name {
     return url_escape($name)
 }
 
-get '/video/<name>.joined.<ext>' => sub {
+get '/video/*name.joined.<ext>' => sub {
     my( $c ) = @_;
     my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
@@ -57,23 +57,29 @@ get '/video/<name>.joined.<ext>' => sub {
     $c->reply->static( $file );
 };
 
-get '/cut/<name>' => sub {
+get '/cut/*name' => sub {
     my( $c ) = @_;
-    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".joined.";
+    my $base = encode('UTF-8', decode_name($c->param('name')));
+    my $file = $config{VIDEO} .'/'. $base . ".joined.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
 
-    return unless $ext;
+if(! $ext) {
+    warn "File '$file*' not found";
+    return;
+}
+
     $file .= $ext;
 
-    my $info = yaml_file(decode_name($c->param('name')) . '.yml');
+    my $info = yaml_file($base. '.yml');
     $info = LoadFile( $info );
     $c->stash( file => basename($file), %$info  );
-    $c->render( template => 'cut' );
+    $c->render( template => 'cutname' );
 };
 
-post '/cut/<name>' => sub {
+post '/cut/*name' => sub {
     my( $c ) = @_;
     my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".joined.";
+    $file = encode('UTF-8', $file);
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
     return unless $ext;
     $file .= $ext;
@@ -112,7 +118,7 @@ __DATA__
 @@app.css
 video { width: 100% }
 
-@@cut.html.ep
+@@cutname.html.ep
 <!DOCTYPE html>
 <html lang="en">
 <head>
