@@ -107,6 +107,6 @@ This script scales the input video to a given width/height.
 
 ## Rendering the videos
 
-    make videos
+    make -f make/Makefile CONFIG=cfg/gpw2022.cfg videos
 
 This (re)generates all videos as necessary.
