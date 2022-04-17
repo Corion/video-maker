@@ -2,7 +2,7 @@
 use strict;
 use Mojolicious::Lite;
 use Mojolicious::Static;
-use Mojo::Util 'url_escape', 'url_unescape';
+use Mojo::Util 'url_escape', 'url_unescape', 'decode';
 use Cwd;
 use YAML 'LoadFile', 'DumpFile';
 use File::Basename;
@@ -35,7 +35,7 @@ sub yaml_file {
 
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.joined.(mkv|MP4)$//i; encode_name(basename($_)) } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
+    my $files = [ map { s/\.joined.(mkv|MP4)$//i; { file => encode_name(basename($_)), name => decode('UTF-8', $_) } } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
@@ -103,7 +103,7 @@ __DATA__
 <body>
 <ol>
 %for my $file (@$files) {
-<li><a href="/cut/<%= $file %>"><%=$file%></a></li>
+<li><a href="/cut/<%= $file->{file} %>"><%=$file->{name}%></a></li>
 %}
 </ol>
 </body>
