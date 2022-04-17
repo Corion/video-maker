@@ -36,13 +36,17 @@ if( $schedule_file ) {
         #warn "Found timestamp $ts";
         my $start_time = Time::Piece->strptime($ts,'%Y-%m-%dT%H-%M-%S%z');
 
-        my @previous = grep { $_->{date} <= $start_time->epoch }
+        # We add a fuzz of 600 for talks starting late
+        my @previous = grep { $_->{date} <= $start_time->epoch+600 }
                        sort { $a->{date} <=> $b->{date} }
                        C3VOC::Schedule::read_schedule_xml( $schedule_file );
+#for(@previous) {
+#warn "$_->{speaker} - $_->{date} - " . $start_time->epoch;
+#}
         my $talk = $previous[-1];
 
         if( $talk ) {
-            $talk_url = "https://act.yapc.eu/gpw2021/talk/$talk->{id}";
+            $talk_url = "https://act.yapc.eu/gpw2022/talk/$talk->{id}";
             $title    = $talk->{title};
             $artist   = $talk->{speaker};
         };
