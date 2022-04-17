@@ -49,15 +49,17 @@ sub encode_name {
     return url_escape($name)
 }
 
-get '/video/*name.joined.<ext>' => sub {
+get '/video/<*name>.joined.<ext>' => sub {
     my( $c ) = @_;
     my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
-    my $file = video_file( decode_name($c->param('name')) . ".joined.$ext" );
+    my $base = decode_name($c->param('name'));
+    $base = decode('UTF-8', $base);
+    my $file = video_file( $base . ".joined.$ext" );
     $c->reply->static( $file );
 };
 
-get '/cut/*name' => sub {
+get '/cut/<*name>' => sub {
     my( $c ) = @_;
     my $base = encode('UTF-8', decode_name($c->param('name')));
     my $file = $config{VIDEO} .'/'. $base . ".joined.";
@@ -76,7 +78,7 @@ if(! $ext) {
     $c->render( template => 'cutname' );
 };
 
-post '/cut/*name' => sub {
+post '/cut/<*name>' => sub {
     my( $c ) = @_;
     my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".joined.";
     $file = encode('UTF-8', $file);
