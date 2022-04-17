@@ -1,8 +1,4 @@
 CONFIG ?= cfg/gpw2021.cfg
-FFMPEG ?= $(which ffmpeg)
-FFPROBE ?= $(which ffprobe)
-SCALE ?= scale
-X264 ?= libx264
 
 # Find rate of recorded video
 # ffprobe 2019-03-07-what-i-learned-about-sql-in-2018.joined.MP4 -select_streams v:0 -show_entries stream=r_frame_rate -of compact=p=0:nk=1
@@ -20,15 +16,21 @@ RATE=25/1
 AUDIO_RATE=256k
 
 # ffprobe -v 0 -of csv=p=0 -select_streams a:0 -show_entries stream=sample_rate
-AUDIO_SAMPLE_RATE=44100
+AUDIO_SAMPLE_RATE ?= 44100
 # ffprobe -v error -select_streams v:0 -show_entries stream=height,width -of csv=s=x:p=0
-TARGET_RESOLUTION=1920x1080
-DURATION_HEADER=10
-DURATION_TRAILER=75
 
 VIDEO=video
 
 include $(CONFIG)
+
+FFMPEG ?= $(which ffmpeg)
+$(info $(FFMPEG))
+FFPROBE ?= $(which ffprobe)
+VF_SCALE ?= scale
+X264 ?= libx264
+TARGET_RESOLUTION ?= 1920x1080
+DURATION_HEADER ?=10
+DURATION_TRAILER ?=75
 
 JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard $(VIDEO)/*.1.mkv))
 VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard $(VIDEO)/*.joined.mkv))
@@ -53,10 +55,11 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
 	#		-s "$(TARGET_RESOLUTION)" \
 	echo $(AUDIO_SAMPLE_RATE)
-	$FFPMEG \
+	$(FFPMEG) \
+	$(FFMPEG_OPT) \
 		-f concat -i $(TRAILER_SLIDESHOW) \
 		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-		-vf $(SCALE)=$(TARGET_RESOLUTION),fps=25 \
+		-vf $(VF_SCALE)=$(TARGET_RESOLUTION),fps=25 \
 		-c:v $(X264) -pix_fmt yuv420p \
 		-c:a aac -b:a $(AUDIO_RATE) -t $(DURATION_TRAILER) \
 		$@ -y
@@ -74,11 +77,13 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 
 %.titlecard.mkv: %.titlecard.png $(TITLECARD)
 	# Titlecard animieren
-	$FFMPEG \
+	echo "<$(FFMPEG)>"
+	$(FFMPEG) \
+	$(FFMPEG_OPT) \
 		-i $< \
 		-loop 1 -framerate $(RATE) -i $< \
 		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
-		-vf $(SCALE)=$(TARGET_RESOLUTION),fps=25 \
+		-vf $(VF_SCALE)=$(TARGET_RESOLUTION),fps=25 \
 	    -video_size $(TARGET_RESOLUTION) \
 		-c:v $(X264) -pix_fmt yuv420p \
 		-c:a aac -b:a $(AUDIO_RATE) -t 5 \
