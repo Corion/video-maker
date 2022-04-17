@@ -6,6 +6,7 @@ use Getopt::Long;
 use YAML 'DumpFile';
 use File::Basename;
 use lib 'lib';
+use Encode 'decode';
 
 GetOptions(
     'o=s' => \my $outname,
@@ -27,14 +28,18 @@ if( $schedule_file ) {
     require C3VOC::Schedule;
     require Time::Piece;
 
-    my $name = basename $movie;
+    my $name = decode('UTF-8', basename $movie);
 
     if( $name =~ /^(20\d\d-\d\d-\d\d)[-_ T](\d\d-\d\d-\d\d)\b/ ) {
-        my $ts = "$1T$2+0100";
+        #my $ts = "$1T$2+0200";
+        my $ts = "$1T$2+0100"; # the recording machines run on GMT+1 / UK time
         #warn "Found timestamp $ts";
         my $start_time = Time::Piece->strptime($ts,'%Y-%m-%dT%H-%M-%S%z');
 
-        (my $talk) = grep { $_->{date} == $start_time->epoch } C3VOC::Schedule::read_schedule_xml( $schedule_file );
+        my @previous = grep { $_->{date} <= $start_time->epoch }
+                       sort { $a->{date} <=> $b->{date} }
+                       C3VOC::Schedule::read_schedule_xml( $schedule_file );
+        my $talk = $previous[-1];
 
         if( $talk ) {
             $talk_url = "https://act.yapc.eu/gpw2021/talk/$talk->{id}";
