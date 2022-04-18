@@ -1,0 +1,84 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use Getopt::Long;
+use YAML 'LoadFile';
+use File::Temp 'tempfile';
+use Cwd;
+use Text::ParseWords;
+use Data::Dumper;
+
+GetOptions(
+    'o=s'  => \my $outname,
+    'safe' => \my $safe,
+    'verbose|v' => \my $verbose,
+    'dry-run|n'    => \my $dry_run,
+);
+
+die "No output filename"
+    unless $outname;
+
+my $ffmpeg = $ENV{FFMPEG} || 'ffmpeg';
+my @ffmpeg_options = shellwords( $ENV{FFMPEG_OPT});
+
+my $cwd = getcwd();
+
+my ($config) = grep /\.yml/i, @ARGV;
+if( $config ) {
+    $config = LoadFile( $config );
+} else {
+    $config = {}
+};
+
+
+my @metadata;
+for my $meta (keys %{ $config->{metadata} || {} }) {
+    push @metadata, '-metadata', $meta . '=' . $config->{metadata}->{$meta}
+        if exists $config->{metadata}->{$meta};
+};
+
+my @input = @{ $config->{cutmarks}};
+#my (@videos, @audios);
+my (@cutstreams);
+my $idx = -1;
+my $cutmarks = join ";\n",
+       map { $idx++; #push @videos, "[v${idx}]"; push @audios, "[a${idx}]";
+	     push @cutstreams, "[v${idx}]", "[a${idx}]";
+             #print "Join: $_->{file}\n";
+             my $inpoint = $_->{inpoint} =~ s!:!\\:!gr;
+             my $outpoint = $_->{outpoint} =~ s!:!\\:!gr;
+             (
+                 "[$idx:v] trim=start='$inpoint':end='$outpoint', setpts=PTS-STARTPTS [v${idx}]",
+                 "[$idx:a]atrim=start='$inpoint':end='$outpoint',asetpts=PTS-STARTPTS [a${idx}]",
+             )
+           } @input;
+my @concat;
+my $count = 0+@cutstreams;
+push @concat, join '', @cutstreams, "concat=v=1:a=1 [video-out][audio-out]";
+#push @concat, join '', @audios, "concat=n=$count:v=0:a=1 [audio-out]";
+my $concat = join ";\n", @concat;
+
+my @cmd = ( $ffmpeg =>
+            @ffmpeg_options,
+            '-hwaccel', 'cuda',
+            '-analyzeduration', 25000,
+            (map {; '-fflags', '+igndts', '-i', $_->{file} } @input),
+	    #'-c:v', 'libx264',
+            @metadata,
+            '-movflags',
+            '+faststart',
+            '-filter_complex', "$cutmarks;\n$concat",
+	    # Upconvert non--r 30 videos first!
+	    #'-r', 25,
+            '-map', '[video-out]',
+	    '-c:v', 'h264_nvenc',
+            '-map', '[audio-out]',
+            '-c:a', 'aac',
+            $outname, '-y'
+);
+warn "@cmd" if $verbose or $dry_run;
+if(! $dry_run) {
+    system(@cmd) == 0
+        or die "$? / $!";
+};
