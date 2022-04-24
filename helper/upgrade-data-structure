@@ -1,0 +1,25 @@
+#!perl
+use strict;
+use warnings;
+
+use YAML qw(LoadFile DumpFile);
+
+for my $file (@ARGV) {
+    my $struct = LoadFile($file);
+
+    # Update from cutting a single file to using a cutlist
+    if( ! exists $struct->{cutmarks}) {
+        my $start = delete $struct->{start};
+        my $stop  = delete $struct->{stop};
+        (my $filename = $file ) =~ s/\.yml/.mkv/i;
+        $struct->{cutmarks} = [
+            {
+                inpoint => $start,
+                outpoint => $stop,
+                file => $filename,
+            }
+        ];
+    }
+
+    DumpFile( $file, $struct );
+}
