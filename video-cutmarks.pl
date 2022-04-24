@@ -35,7 +35,7 @@ sub yaml_file {
 
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.joined.(mkv|MP4)$//i; { file => encode_name(basename(decode('UTF-8',$_))), name => decode('UTF-8', basename($_)) } } glob $config{VIDEO} . '/*.joined.{MP4,mkv}' ];
+    my $files = [ map { s/\.1.(mkv|MP4)$//i; { file => encode_name(basename(decode('UTF-8',$_))), name => decode('UTF-8', basename($_)) } } glob $config{VIDEO} . '/*.1.{MP4,mkv}' ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
@@ -49,20 +49,20 @@ sub encode_name {
     return url_escape($name)
 }
 
-get '/video/<*name>.joined.<ext>' => sub {
+get '/video/<*name>.1.<ext>' => sub {
     my( $c ) = @_;
     my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
     my $base = decode_name($c->param('name'));
     $base = decode('UTF-8', $base);
-    my $file = video_file( $base . ".joined.$ext" );
+    my $file = video_file( $base . ".1.$ext" );
     $c->reply->static( $file );
 };
 
 get '/cut/<*name>' => sub {
     my( $c ) = @_;
     my $base = encode('UTF-8', decode_name($c->param('name')));
-    my $file = $config{VIDEO} .'/'. $base . ".joined.";
+    my $file = $config{VIDEO} .'/'. $base . ".1.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
 
 if(! $ext) {
@@ -80,15 +80,24 @@ if(! $ext) {
 
 post '/cut/<*name>' => sub {
     my( $c ) = @_;
-    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".joined.";
+    # This should be based on the names in the .yml instead of guessing the name
+    # from the central base, but whatever
+    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".1.";
+    my $filename_unicode = $file;
     $file = encode('UTF-8', $file);
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
     return unless $ext;
+    $filename_unicode .= $ext;
     $file .= $ext;
     my $yml = yaml_file(decode_name($c->param('name')) . '.yml');
+    # Here we overwrite any manual other files/edits
+    # This should be corrected, by allowing more cutmarks in the UI itself too
     my $info = {
-        start => $c->param('start'),
-        stop  => $c->param('stop'),
+        cutmarks => [{
+            inpoint  => $c->param('start'),
+            outpoint => $c->param('stop'),
+            file     => $filename_unicode,
+        }],
         metadata => {
             title => $c->param('title'),
             artist => $c->param('artist'),
@@ -276,11 +285,11 @@ function to_ts(sec) {
 <div id="controls">
     <div id="timer">00:00:00.0000</div>
     <button onclick="javascript:stepff('timer_start', -0.1); return false">&lt;</button>
-    <input type="text" id="timer_start" name="start" value="<%= $start %>" />
+    <input type="text" id="timer_start" name="start" value="<%= $cutmarks->[0]->{inpoint} %>" />
     <button onclick="javascript:stepff('timer_start', +0.1); return false">&gt;</button>
     </div><div>
     <button onclick="javascript:stepff('timer_stop', -0.1); return false">&lt;</button>
-    <input type="text" id="timer_stop" name="stop" value="<%= $stop %>" />
+    <input type="text" id="timer_stop" name="stop" value="<%= $cutmarks->[0]->{outpoint} %>" />
     <button onclick="javascript:stepff('timer_stop', +0.1); return false">&gt;</button>
     </div>
 </div>

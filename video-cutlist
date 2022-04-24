@@ -31,7 +31,6 @@ if( $config ) {
     $config = {}
 };
 
-
 my @metadata;
 for my $meta (keys %{ $config->{metadata} || {} }) {
     push @metadata, '-metadata', $meta . '=' . $config->{metadata}->{$meta}
@@ -39,13 +38,19 @@ for my $meta (keys %{ $config->{metadata} || {} }) {
 };
 
 my @input = @{ $config->{cutmarks}};
+
+for my $file (@input) {
+    $file->{inpoint} ||= '0:00:00.000';
+    $file->{outpoint} ||= `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$file->{file}"`;
+};
+
 #my (@videos, @audios);
 my (@cutstreams);
 my $idx = -1;
 my $cutmarks = join ";\n",
        map { $idx++; #push @videos, "[v${idx}]"; push @audios, "[a${idx}]";
 	     push @cutstreams, "[v${idx}]", "[a${idx}]";
-             #print "Join: $_->{file}\n";
+             print "Join: $_->{file}\n";
              my $inpoint = $_->{inpoint} =~ s!:!\\:!gr;
              my $outpoint = $_->{outpoint} =~ s!:!\\:!gr;
              (
@@ -55,13 +60,19 @@ my $cutmarks = join ";\n",
            } @input;
 my @concat;
 my $count = 0+@cutstreams;
-push @concat, join '', @cutstreams, "concat=v=1:a=1 [video-out][audio-out]";
+
+if( @input > 1 ) {
+    push @concat, join '', @cutstreams, "concat=v=1:a=1 [video-out][audio-out]";
+} else {
+    push @concat, '[v0] copy [video-out]';
+    push @concat, '[a0] acopy [audio-out]';
+}
+
 #push @concat, join '', @audios, "concat=n=$count:v=0:a=1 [audio-out]";
 my $concat = join ";\n", @concat;
 
 my @cmd = ( $ffmpeg =>
             @ffmpeg_options,
-            '-hwaccel', 'cuda',
             '-analyzeduration', 25000,
             (map {; '-fflags', '+igndts', '-i', $_->{file} } @input),
 	    #'-c:v', 'libx264',

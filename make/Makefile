@@ -32,16 +32,16 @@ TARGET_RESOLUTION ?= 1920x1080
 DURATION_HEADER ?=10
 DURATION_TRAILER ?=75
 
-JOINED_VIDEOS := $(subst .1.mkv,.joined.mkv,$(wildcard $(VIDEO)/*.1.mkv))
-VIDEOS := $(subst .joined.mkv,.final.mkv,$(wildcard $(VIDEO)/*.joined.mkv))
-METADATA_FILES := $(subst .joined.mkv,.yml,$(JOINED_VIDEOS))
+INPUT_VIDEOS := $(wildcard $(VIDEO)/*.1.mkv)
+METADATA_FILES := $(subst .1.mkv,.yml,$(INPUT_VIDEOS))
+VIDEOS := $(subst .yml,.final.mkv,$(wildcard $(VIDEO)/*.yml))
 
 .PRECIOUS: %.yml %.middle.mkv
 .PHONY: prepare-cut videos
 
 metadata: $(METADATA_FILES)
 
-prepare-cut: $(JOINED_VIDEOS) metadata
+prepare-cut: $(INPUT_VIDEOS) metadata
 
 videos: $(VIDEOS)
 
@@ -92,14 +92,9 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 %.title.mkv: %.titlecard.mkv $(ANIMATED_TITLE)
 	$(JOIN) $(ANIMATED_TITLE) $< -o $@
 
-%.joined.mkv: %.[1234].mkv
-	$(JOIN) $(sort $^) -o $@
-
-%.trimmed.mkv: %.joined.mkv %.yml
-	$(TRIM) $^ -o $@
-
-%.middle.mkv: %.trimmed.mkv %.yml
-	cp $< $@
+# The filenames for the cutlist come from the YAML file now
+%.middle.mkv: %.yml %.[1234].mkv
+	$(CUTLIST) $< -o $@
 
 #%.final.MP4: $(HEADER) %.inset-start.MP4 %.middle.MP4 %.inset-end.MP4 $(TRAILER) %.yml
 %.final.mkv: %.title.mkv %.middle.mkv $(TRAILER) %.yml
