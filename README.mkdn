@@ -54,7 +54,7 @@ This launches the editor for editing the video metadata. Go through
 all the videos and set the start and end time. Not setting the
 start and end time will result in a crash.
 
-Note that currently, Chrome is the best browsers for cutting files as it
+Note that currently, Chrome is the best browser for cutting files as it
 supports the `.mkv` format.
 
 The keybindings in the video cutter are:
