@@ -196,6 +196,12 @@ let commands = {
             video.pause()
         }
     },
+    jumpToStart: function() {
+        video.currentTime = 0;
+    },
+    jumpToEnd: function() {
+        video.currentTime = video.duration;
+    },
     setStartCue: function() {
         document.getElementById("timer_start").value = to_ts( video.currentTime );
     },
@@ -239,6 +245,8 @@ function doCommand(cmd) {
 let KeyboardMap = {
     // F -> save the current state
     0x0046 : (e) => { doCommand('saveCurrentState' ) },
+    // shift+G -> jump to end of file
+    0x0147 : (e) => { doCommand('jumpToEnd'); },
     // I -> go back to index page
     0x0049 : (e) => { doCommand('backToIndex' ) },
     // Spacebar
