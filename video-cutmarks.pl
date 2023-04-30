@@ -188,10 +188,18 @@ let commands = {
         var indexPage = document.getElementById("lnkIndex");
         window.location.assign( indexPage.href );
     },
+    playPause: function() {
+        if (video.paused) {
+            video.play()
+        } else {
+            video.pause()
+        }
+    },
 };
 
 function doCommand(cmd) {
     if( cb = commands[cmd]) {
+        //console.log(cmd);
         cb();
     } else {
         console.log(`Unknown command '${cmd}'`);
@@ -213,7 +221,7 @@ function onKeyboardInput(e) {
         saveForm({});
     };
 
-    if(charCode == 32) { if (video.paused) { video.play() } else { video.pause() }};
+    if(charCode == 32) { doCommand('playPause' )};
     // Q -> step back a second
     if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
     // E -> step forward a second
