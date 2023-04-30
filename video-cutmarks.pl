@@ -189,6 +189,7 @@ video { width: 100%; }
 <meta charset="utf-8"/>
 <link rel="stylesheet"  type="text/css" href="/app.css" />
 <script>
+"use strict";
 let video;
 let playUntil;
 
@@ -268,7 +269,8 @@ let commands = {
 };
 
 function doCommand(cmd) {
-    if( cb = commands[cmd]) {
+    let cb = commands[cmd];
+    if( cb ) {
         //console.log(cmd);
         cb();
     } else {
@@ -300,7 +302,7 @@ let KeyboardMap = {
 function onKeyboardInput(e) {
     e = e || window.event;
     if( e.target.tagName == "INPUT" ) return;
-    letcharCode = e.which || e.keyCode;
+    let charCode = e.which || e.keyCode;
 
     let entry = e.shiftKey * 256 + charCode;
     document.getElementById("last_keycode").innerHTML = entry.toString(16);
@@ -456,7 +458,7 @@ function ready() {
             playUntil = undefined;
         };
     });
-    btnSave = document.getElementById("btnSave");
+    let btnSave = document.getElementById("btnSave");
     btnSave.addEventListener('click', saveForm );
 
     document.addEventListener('keydown', onKeyboardInput);
@@ -464,7 +466,7 @@ function ready() {
 
     setupMidiInput().then(() => {
         if( midiOutput ) {
-            for (pad of [0x14,0x15,0x16,0x17,
+            for (let pad of [0x14,0x15,0x16,0x17,
                          0x1C,0x1D,0x1E,0x1F,
                 ]) {
                 // Switch off all pads
