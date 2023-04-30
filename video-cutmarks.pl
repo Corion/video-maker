@@ -225,6 +225,8 @@ let KeyboardMap = {
     0x0046 : (e) => { doCommand('saveCurrentState' ) },
     // I -> go back to index page
     0x0049 : (e) => { doCommand('backToIndex' ) },
+    // Spacebar
+    0x0020 : (e) => { doCommand('playPause' )},
 }
 
 function onKeyboardInput(e) {
@@ -240,7 +242,7 @@ function onKeyboardInput(e) {
         return;
     }
 
-    if(charCode == 32) { doCommand('playPause' )};
+    // XXX convert to doCommand
     // Q -> step back a second
     if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
     // E -> step forward a second
