@@ -195,6 +195,9 @@ let commands = {
             video.pause()
         }
     },
+    setStartCue: function() {
+        document.getElementById("timer_start").value = to_ts( video.currentTime );
+    }
 };
 
 function doCommand(cmd) {
@@ -233,7 +236,7 @@ function onKeyboardInput(e) {
         if( e.shiftKey ) {
             video.currentTime = to_sec(document.getElementById("timer_start").value);
         } else {
-            document.getElementById("timer_start").value = to_ts( video.currentTime );
+            doCommand('setStartCue');
         };
     };
     // D
