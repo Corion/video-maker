@@ -49,7 +49,7 @@ if( $schedule_file ) {
         my $talk = $previous[-1];
 
         if( $talk ) {
-            $talk_url = "$talk_base/$talk->{id}";
+            $talk_url = "$url_base/$talk->{id}";
             $title    = $talk->{title};
             $artist   = $talk->{speaker};
         };
