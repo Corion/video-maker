@@ -218,20 +218,27 @@ function doCommand(cmd) {
     }
 }
 
+// 16-bit input map
+// high byte is shift
+let KeyboardMap = {
+    // F -> save the current state
+    0x0046 : (e) => { doCommand('saveCurrentState' ) },
+    // I -> go back to index page
+    0x0049 : (e) => { doCommand('backToIndex' ) },
+}
+
 function onKeyboardInput(e) {
     e = e || window.event;
     if( e.target.tagName == "INPUT" ) return;
     var charCode = e.which || e.keyCode;
 
-    // I -> go back to index page
-    if(charCode == 73) {
-        doCommand('backToIndex');
-    };
-
-    // F -> save the current state
-    if(charCode == 70) {
-        doCommand('saveCurrentState');
-    };
+    let entry = e.shiftKey * 256 + charCode;
+    console.log("Keycode " +entry.toString(16));
+    let cb = KeyboardMap[ entry ];
+    if(cb) {
+        cb(e);
+        return;
+    }
 
     if(charCode == 32) { doCommand('playPause' )};
     // Q -> step back a second
