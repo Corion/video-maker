@@ -37,17 +37,22 @@ sub yaml_file {
     return $config{VIDEO} . '/' . $fn;
 }
 
+# We want a sorted list of files so prev/next work
+sub input_files {
+    map { s/\.1.(mkv|MP4)$//i;
+          my $f = basename(decode('UTF-8',$_));
+          { file => encode_name($f),
+            name => decode('UTF-8', basename($_)),
+            %{ fetch_config( basename($_) ) },
+        }
+    }
+    sort { $a cmp $b }
+    glob $config{VIDEO} . '/*.1.{MP4,mkv}'
+}
+
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [
-        map { s/\.1.(mkv|MP4)$//i;
-              my $f = basename(decode('UTF-8',$_));
-              { file => encode_name($f),
-                name => decode('UTF-8', basename($_)),
-                %{ fetch_config( basename($_) ) },
-            }
-        } glob $config{VIDEO} . '/*.1.{MP4,mkv}'
-    ];
+    my $files = [ input_files() ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
