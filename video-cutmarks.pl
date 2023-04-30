@@ -8,7 +8,7 @@ use Mojolicious::Lite;
 use Mojolicious::Static;
 use Mojo::Util 'url_escape', 'url_unescape', 'decode', 'encode';
 use Cwd;
-use YAML 'LoadFile', 'DumpFile';
+use YAML 'LoadFile', 'Dump';
 use File::Basename;
 
 plugin AutoReload => {};
@@ -99,6 +99,26 @@ sub fetch_config {
     }
 }
 
+sub update_file( $filename, $new_content ) {
+    my $content;
+    if( -f $filename ) {
+        open my $fh, '<', $filename
+            or die "Couldn't read '$filename': $!";
+        binmode $fh, ':utf8';
+        local $/;
+        $content = <$fh>;
+    };
+
+    if( $content ne $new_content ) {
+        if( open my $fh, '>', $filename ) {
+            binmode $fh, ':utf8';
+            print $fh $new_content;
+        } else {
+            warn "Couldn't (re)write '$filename': $!";
+        };
+    };
+}
+
 get '/cut/<*name>' => sub {
     my( $c ) = @_;
     my $base = encode('UTF-8', decode_name($c->param('name')));
@@ -158,7 +178,10 @@ post '/cut/<*name>' => sub {
             url  => $c->param('url'),
         },
     };
-    DumpFile( $yml, $info );
+
+    # Only overwrite the file if we have new/different content, since we
+    # now always "save" in the UI
+    update_file( $yml, Dump( $info ));
     $c->redirect_to($c->url_for('/cut/' . decode_name($c->param('name'))));
 };
 
