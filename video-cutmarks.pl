@@ -1,5 +1,9 @@
 #!perl
 use strict;
+use 5.020;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+
 use Mojolicious::Lite;
 use Mojolicious::Static;
 use Mojo::Util 'url_escape', 'url_unescape', 'decode', 'encode';

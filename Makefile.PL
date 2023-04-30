@@ -36,7 +36,7 @@ my %module = (
         x_static_install => 1, # we are pure Perl and don't do anything fancy
     },
 
-    MIN_PERL_VERSION => '5.008',
+    MIN_PERL_VERSION => '5.020',
 
     'LICENSE'=> 'perl',
 
@@ -87,7 +87,7 @@ if( ! caller ) {
     my $ok = eval {
         require File::Which;
         1;
-    }; 
+    };
     if( ! $ok ) {
         my $err = $@;
         warn "File::Which is a build-time prerequisite.\n";
@@ -103,7 +103,7 @@ if( ! caller ) {
             print "OK, found ffmpeg at '$ffmpeg'\n";
         };
     };
-    
+
 };
 
 1;
