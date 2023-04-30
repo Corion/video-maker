@@ -159,6 +159,9 @@ video { width: 100%; }
 var video;
 var playUntil;
 
+let midiInput;
+let midiOutput;
+
 function saveForm(e) {
     var http = new XMLHttpRequest();
     var url = window.location;
@@ -289,11 +292,126 @@ function onKeyboardInput(e) {
     if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
     // Y/Z -> move end timestamp
     if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
+}
 
-    // shift+G -> jump to end of video
-    if(charCode == 71) {
-        video.currentTime = video.duration;
-    };
+let MidiShift; // Shift key held
+let MidiKeystate = {};
+let MidiMap = {
+    // Shift key
+    //0x9e00 : (d) => { MidiShift = true },
+    //0x8e00 : (d) => { MidiShift = false },
+
+    // Left play/pause key
+    0x9000 : (d) => { doCommand('playPause') },
+    0x9005 : (d) => { doCommand('jumpToStart') },
+    0x9428 : (d) => { doCommand('jumpToStart') },
+    0x9429 : (d) => { doCommand('jumpToEnd') },
+    //0x9006 : (d) => { doCommand('touchHold') },
+    // Mid track selector for track nav
+    0x9414 : (d) => {
+                // Set in cue point if we don't have one yet
+                doCommand('setStartCue');
+                midiOutput.send([0x94,0x14,0x7f]); // Light up the pad
+                midiOutput.send([0x94,0x1C,0x7f]); // (also the shifted button)
+                // Should we play if held?!
+                // Should we jump to cue point if we already have one
+            },
+    0x9415 : (d) => {
+                // Set in cue point if we don't have one yet
+                doCommand('setEndCue');
+                midiOutput.send([0x94,0x15,0x7f]); // Light up the pad
+                midiOutput.send([0x94,0x1D,0x7f]); // (also the shifted button)
+                // Should we play if held?!
+                // Should we jump to cue point if we already have one
+            },
+    0x941C : (d) => {
+                doCommand('eraseStartCue');
+                midiOutput.send([0x94,0x14,0x00]); // Dim the pad
+                midiOutput.send([0x94,0x1C,0x00]); // Dim the shifted
+            },
+    0x9418 : (d) => {
+                // Set in cue point if we don't have one yet??
+                doCommand('jumpToStartCue');
+                // Should we play if held?!
+            },
+    0x9419 : (d) => {
+                // Set in cue point if we don't have one yet??
+                doCommand('playToEndCue');
+                // Should we play if held?!
+            },
+    0x9E06 : (d) => { doCommand('backToIndex') }, // actually we should have the track as a selectable pane ...
+    // left jog wheel for nav
+    0xB006 : (d) => {
+                // XXX This should be a doCommand!
+                let direction = d[2] > 0x7f ? -1 : 1;
+                let scale = {
+                    0x7e : -0.2,
+                    0x7f : -0.1,
+                    0x01 :  0.1,
+                    0x02 :  0.2,
+                };
+                let magnitude = scale[ d[2]];
+                if( ! magnitude ) {
+                    magnitude = 1;
+                };
+                stepff('', direction * magnitude );
+            },
+};
+
+function onMidiInput(e) {
+    // e.data has the MIDI message
+    if( e.data[0] != 0xf0 ) { // ignore sysex messages ?!
+        let keycode = event.data.reduce(function(s, x) {
+          return s + " " + x.toString(16).padStart(2, "0");
+        }, "").slice(1);
+        document.getElementById("last_keycode").innerHTML = keycode;
+        let key_id = e.data[0] * 256 + e.data[1];
+        let cb = MidiMap[ e.data[0] * 256 + e.data[1] ];
+
+        if( key_id & 0xF000 == 0x9000 ) {
+            MidiKeystate[key_id] = true;
+        } else {
+            MidiKeystate[key_id | 0x9000] = false;
+        }
+
+        if(cb) {
+            cb(e.data);
+        }
+
+    }
+}
+
+async function setupMidiInput() {
+    let access;
+    try {
+        access = await navigator.requestMIDIAccess({sysex: true});
+    } catch {
+        // No MIDI for you
+        return null;
+    }
+
+    // access.statechange is fired when a device is connected/disconnnected
+    // Hardcoded to the device(s) of interest:
+    access.inputs.forEach( port => { if( port.name.match(/\bReloop\b/)) { midiInput = port } } );
+    if( ! midiInput ) {
+        // Take the first device, if any
+        midiInput = access.inputs[0];
+    }
+
+    if( midiInput ) {
+        midiInput.addEventListener( 'midimessage', onMidiInput );
+    }
+
+    access.outputs.forEach( port => { if( port.name.match(/\bReloop\b/)) { midiOutput = port } } );
+    if( ! midiOutput ) {
+        // Take the first device, if any
+        midiOutput = access.outputs[0];
+    }
+
+    if( midiInput ) {
+        midiInput.addEventListener( 'midimessage', onMidiInput );
+    }
+
 }
 
 function ready() {
@@ -310,6 +428,19 @@ function ready() {
 
     document.addEventListener('keydown', onKeyboardInput);
     document.getElementById("timer").focus();
+
+    setupMidiInput().then(() => {
+        if( midiOutput ) {
+            for (pad of [0x14,0x15,0x16,0x17,
+                         0x1C,0x1D,0x1E,0x1F,
+                ]) {
+                // Switch off all pads
+                midiOutput.send([0x94, pad, 0x00]);
+            }
+        }
+        console.log("MIDI setup done");
+    });
+
 };
 
 function stepff(control,amount) {
