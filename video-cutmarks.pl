@@ -35,7 +35,15 @@ sub yaml_file {
 
 get '/' => sub {
     my( $c ) = @_;
-    my $files = [ map { s/\.1.(mkv|MP4)$//i; { file => encode_name(basename(decode('UTF-8',$_))), name => decode('UTF-8', basename($_)) } } glob $config{VIDEO} . '/*.1.{MP4,mkv}' ];
+    my $files = [
+        map { s/\.1.(mkv|MP4)$//i;
+              my $f = basename(decode('UTF-8',$_));
+              { file => encode_name($f),
+                name => decode('UTF-8', basename($_)),
+                %{ fetch_config( basename($_) ) },
+            }
+        } glob $config{VIDEO} . '/*.1.{MP4,mkv}'
+    ];
     $c->stash( files => $files);
     $c->render( template => 'index' );
 };
@@ -59,19 +67,8 @@ get '/video/<*name>.1.<ext>' => sub {
     $c->reply->static( $file );
 };
 
-get '/cut/<*name>' => sub {
-    my( $c ) = @_;
-    my $base = encode('UTF-8', decode_name($c->param('name')));
-    my $file = $config{VIDEO} .'/'. $base . ".1.";
-    (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
-
-    if(! $ext) {
-        warn "File '$file*' not found";
-        return;
-    }
-
-    $file .= $ext;
-
+sub fetch_config {
+    my( $base) = (@_);
     my $info = yaml_file($base. '.yml');
 
     if( ! -f $info ) {
@@ -87,14 +84,28 @@ get '/cut/<*name>' => sub {
                 url => "https://act.yapc.eu/gpw2023/talk/",
             },
         };
-        $c->stash( file => basename($file), %$info  );
-        $c->render( template => 'cutname' );
 
     } else {
         $info = LoadFile( $info );
-        $c->stash( file => basename($file), %$info  );
-        $c->render( template => 'cutname' );
     }
+}
+
+get '/cut/<*name>' => sub {
+    my( $c ) = @_;
+    my $base = encode('UTF-8', decode_name($c->param('name')));
+    my $file = $config{VIDEO} .'/'. $base . ".1.";
+    (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
+
+    if(! $ext) {
+        warn "File '$file*' not found";
+        return;
+    }
+
+    $file .= $ext;
+
+    my $info = fetch_config( $base );
+    $c->stash( file => basename($file), %$info  );
+    $c->render( template => 'cutname' );
 };
 
 post '/cut/<*name>' => sub {
@@ -139,7 +150,7 @@ __DATA__
 <body>
 <ol>
 %for my $file (@$files) {
-<li><a href="/cut/<%= $file->{file} %>"><%=$file->{name}%></a></li>
+<li><a href="/cut/<%= $file->{file} %>"><%=$file->{name}%></a> - <%= $file->{metadata}->{title} %> - <%= $file->{metadata}->{artist} %></li>
 %}
 </ol>
 </body>
