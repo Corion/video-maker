@@ -65,17 +65,36 @@ get '/cut/<*name>' => sub {
     my $file = $config{VIDEO} .'/'. $base . ".1.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
 
-if(! $ext) {
-    warn "File '$file*' not found";
-    return;
-}
+    if(! $ext) {
+        warn "File '$file*' not found";
+        return;
+    }
 
     $file .= $ext;
 
     my $info = yaml_file($base. '.yml');
-    $info = LoadFile( $info );
-    $c->stash( file => basename($file), %$info  );
-    $c->render( template => 'cutname' );
+
+    if( ! -f $info ) {
+        # Should we make up random content here?!
+        # We should shell out to the metadata generator instead!
+        $info = {
+            cutmarks => [],
+            metadata => {
+                artist    => "",
+                language => "deu",
+                show => "German Perl/Raku Workshop 2023",
+                title => "",
+                url => "https://act.yapc.eu/gpw2023/talk/",
+            },
+        };
+        $c->stash( file => basename($file), %$info  );
+        $c->render( template => 'cutname' );
+
+    } else {
+        $info = LoadFile( $info );
+        $c->stash( file => basename($file), %$info  );
+        $c->render( template => 'cutname' );
+    }
 };
 
 post '/cut/<*name>' => sub {
