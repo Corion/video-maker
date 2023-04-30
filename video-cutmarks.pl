@@ -217,12 +217,25 @@ function saveForm(e) {
     }
     http.send(payload);
 
-    e.preventDefault();
+    if( e.preventDefault ) {
+        e.preventDefault();
+    }
     return false;
 }
 
 let commands = {
+    nextEntry: function() {
+        saveForm({});
+        let page = document.getElementById("lnkNext");
+        window.location.assign( page.href );
+    },
+    prevEntry: function() {
+        saveForm({});
+        let page = document.getElementById("lnkPrev");
+        window.location.assign( page.href );
+    },
     backToIndex: function() {
+        saveForm({});
         let indexPage = document.getElementById("lnkIndex");
         window.location.assign( indexPage.href );
     },
@@ -287,6 +300,10 @@ let KeyboardMap = {
     0x0147 : (e) => { doCommand('jumpToEnd'); },
     // I -> go back to index page
     0x0049 : (e) => { doCommand('backToIndex' ) },
+    // M -> next video
+    0x004D : (e) => { doCommand('nextEntry' ) },
+    // N -> prev video
+    0x004E : (e) => { doCommand('prevEntry' ) },
     // Spacebar
     0x0020 : (e) => { doCommand('playPause' )},
     // S -> Use as start timestamp
@@ -390,6 +407,15 @@ let MidiMap = {
                     magnitude = 1;
                 };
                 stepff('', direction * magnitude );
+            },
+    0xBE00 : (d) => {
+                // XXX This should be a doCommand!
+                let direction = d[2] > 0x40 ? -1 : 1;
+                if( direction < 0 ) {
+                    doCommand('prevEntry');
+                } else {
+                    doCommand('nextEntry');
+                }
             },
 };
 
