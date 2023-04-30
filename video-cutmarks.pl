@@ -183,6 +183,79 @@ function saveForm(e) {
     return false;
 }
 
+let commands = {
+    backToIndex: function() {
+        var indexPage = document.getElementById("lnkIndex");
+        window.location.assign( indexPage.href );
+    },
+};
+
+function doCommand(cmd) {
+    if( cb = commands[cmd]) {
+        cb();
+    } else {
+        console.log(`Unknown command '${cmd}'`);
+    }
+}
+
+function onKeyboardInput(e) {
+    e = e || window.event;
+    if( e.target.tagName == "INPUT" ) return;
+    var charCode = e.which || e.keyCode;
+
+    // I -> go back to index page
+    if(charCode == 73) {
+        doCommand('backToIndex');
+    };
+
+    // F -> save the current state
+    if(charCode == 70) {
+        saveForm({});
+    };
+
+    if(charCode == 32) { if (video.paused) { video.play() } else { video.pause() }};
+    // Q -> step back a second
+    if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
+    // E -> step forward a second
+    if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
+
+    // S -> Use as start timestamp
+    // shift+S -> play from start timestamp
+    if(charCode == 83) {
+        if( e.shiftKey ) {
+            video.currentTime = to_sec(document.getElementById("timer_start").value);
+        } else {
+            document.getElementById("timer_start").value = to_ts( video.currentTime );
+        };
+    };
+    // D
+    if(charCode == 68) { stepff('timer_start',+1 * (e.shiftKey ? 0.1 : 1 ))};
+    // A
+    if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
+
+    // X -> use as end timestamp
+    // shift+X -> play to end timestamp
+    if(charCode == 88) {
+        if( e.shiftKey ) {
+            video.pause();
+            playUntil = to_sec( document.getElementById("timer_stop").value );
+            video.currentTime = playUntil -3;
+            video.play();
+        } else {
+            document.getElementById("timer_stop").value = to_ts( video.currentTime );
+        };
+    };
+    // C -> move end timestamp
+    if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
+    // Y/Z -> move end timestamp
+    if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
+
+    // shift+G -> jump to end of video
+    if(charCode == 71) {
+        video.currentTime = video.duration;
+    };
+}
+
 function ready() {
     video = document.getElementById("myvideo");
     video.addEventListener('timeupdate', function() {
@@ -195,64 +268,7 @@ function ready() {
     btnSave = document.getElementById("btnSave");
     btnSave.addEventListener('click', saveForm );
 
-    document.addEventListener('keydown', function(e) {
-        e = e || window.event;
-        if( e.target.tagName == "INPUT" ) return;
-        var charCode = e.which || e.keyCode;
-
-        // I -> go back to index page
-        if(charCode == 73) {
-            var indexPage = document.getElementById("lnkIndex");
-            window.location.assign( indexPage.href );
-        };
-
-        // F -> save the current state
-        if(charCode == 70) {
-            saveForm({});
-        };
-
-        if(charCode == 32) { if (video.paused) { video.play() } else { video.pause() }};
-        // Q -> step back a second
-        if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
-        // E -> step forward a second
-        if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // S -> Use as start timestamp
-        // shift+S -> play from start timestamp
-        if(charCode == 83) {
-            if( e.shiftKey ) {
-                video.currentTime = to_sec(document.getElementById("timer_start").value);
-            } else {
-                document.getElementById("timer_start").value = to_ts( video.currentTime );
-            };
-        };
-        // D
-        if(charCode == 68) { stepff('timer_start',+1 * (e.shiftKey ? 0.1 : 1 ))};
-        // A
-        if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // X -> use as end timestamp
-        // shift+X -> play to end timestamp
-        if(charCode == 88) {
-            if( e.shiftKey ) {
-                video.pause();
-                playUntil = to_sec( document.getElementById("timer_stop").value );
-                video.currentTime = playUntil -3;
-                video.play();
-            } else {
-                document.getElementById("timer_stop").value = to_ts( video.currentTime );
-            };
-        };
-        // C -> move end timestamp
-        if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
-        // Y/Z -> move end timestamp
-        if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // shift+G -> jump to end of video
-        if(charCode == 71) {
-            video.currentTime = video.duration;
-        };
-    });
+    document.addEventListener('keydown', onKeyboardInput);
     document.getElementById("timer").focus();
 };
 
