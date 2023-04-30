@@ -167,22 +167,22 @@ video { width: 100%; }
 <meta charset="utf-8"/>
 <link rel="stylesheet"  type="text/css" href="/app.css" />
 <script>
-var video;
-var playUntil;
+let video;
+let playUntil;
 
 let midiInput;
 let midiOutput;
 
 function saveForm(e) {
-    var http = new XMLHttpRequest();
-    var url = window.location;
-    var params = [];
+    let http = new XMLHttpRequest();
+    let url = window.location;
+    let params = [];
 
-    var inputs = document.querySelectorAll("input[value]");
-    for( var el = 0; el < inputs.length; el++ ) {
+    let inputs = document.querySelectorAll("input[value]");
+    for( let el = 0; el < inputs.length; el++ ) {
         params.push(encodeURIComponent(inputs[el].name) + '=' + encodeURIComponent(inputs[el].value))
     };
-    var payload = params.join('&').replace(/%20/g, '+');
+    let payload = params.join('&').replace(/%20/g, '+');
 
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -200,7 +200,7 @@ function saveForm(e) {
 
 let commands = {
     backToIndex: function() {
-        var indexPage = document.getElementById("lnkIndex");
+        let indexPage = document.getElementById("lnkIndex");
         window.location.assign( indexPage.href );
     },
     playPause: function() {
@@ -278,7 +278,7 @@ let KeyboardMap = {
 function onKeyboardInput(e) {
     e = e || window.event;
     if( e.target.tagName == "INPUT" ) return;
-    var charCode = e.which || e.keyCode;
+    letcharCode = e.which || e.keyCode;
 
     let entry = e.shiftKey * 256 + charCode;
     document.getElementById("last_keycode").innerHTML = entry.toString(16);
@@ -455,9 +455,9 @@ function ready() {
 };
 
 function stepff(control,amount) {
-    var ts = 0;
+    let ts = 0;
     if( control ) {
-        var c = document.getElementById(control);
+        let c = document.getElementById(control);
         ts = to_sec( c.value ) + amount;
         c.value = to_ts( ts );
     } else {
@@ -467,7 +467,7 @@ function stepff(control,amount) {
 };
 
 function to_sec(ts) {
-    var res = 0;
+    let res = 0;
     ts = ts.replace(/(?:^|:)(\d+)/g, function(m,v) {
         res = res * 60 + parseInt( v,10 );
         return "";
@@ -483,11 +483,11 @@ function to_sec(ts) {
 };
 
 function to_ts(sec) {
-    var dt = new Date(sec*1000);
-    var hr = dt.getHours()-1;
-    var m = "0" + dt.getMinutes();
-    var s = "0" + dt.getSeconds();
-    var ms = "0000" + (sec *1000 % 1000);
+    let dt = new Date(sec*1000);
+    let hr = dt.getHours()-1;
+    let m = "0" + dt.getMinutes();
+    let s = "0" + dt.getSeconds();
+    let ms = "0000" + (sec *1000 % 1000);
     return hr+ ':' + m.substr(-2) + ':' + s.substr(-2) + "." + ms.substr(-4);
 };
 </script>
