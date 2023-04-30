@@ -205,6 +205,21 @@ let commands = {
     eraseStartCue: function() {
         document.getElementById("timer_start").value = "";
     },
+    setEndCue: function() {
+        document.getElementById("timer_stop").value = to_ts( video.currentTime );
+    },
+    jumpToEndCue: function() {
+        video.currentTime = to_sec(document.getElementById("timer_stop").value);
+    },
+    playToEndCue: function() {
+        video.pause();
+        playUntil = to_sec( document.getElementById("timer_stop").value );
+        video.currentTime = playUntil -3;
+        video.play();
+    },
+    eraseEndCue: function() {
+        document.getElementById("timer_stop").value = "";
+    },
     saveCurrentState: function() {
         saveForm({});
     },
@@ -228,6 +243,14 @@ let KeyboardMap = {
     0x0049 : (e) => { doCommand('backToIndex' ) },
     // Spacebar
     0x0020 : (e) => { doCommand('playPause' )},
+    // S -> Use as start timestamp
+    0x0053 : (e) => { doCommand('setStartCue'); },
+    // shift+S -> play from start timestamp
+    0x0153 : (e) => { doCommand('jumpToStartCue'); },
+    // X -> Use as end timestamp
+    0x0058 : (e) => { doCommand('setEndCue'); },
+    // shift+X -> play until end timestamp
+    0x0158 : (e) => { doCommand('playToEndCue'); },
 }
 
 function onKeyboardInput(e) {
@@ -249,32 +272,11 @@ function onKeyboardInput(e) {
     // E -> step forward a second
     if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
 
-    // S -> Use as start timestamp
-    // shift+S -> play from start timestamp
-    if(charCode == 83) {
-        if( e.shiftKey ) {
-            doCommand('jumpToStartCue');
-        } else {
-            doCommand('setStartCue');
-        };
-    };
     // D
     if(charCode == 68) { stepff('timer_start',+1 * (e.shiftKey ? 0.1 : 1 ))};
     // A
     if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
 
-    // X -> use as end timestamp
-    // shift+X -> play to end timestamp
-    if(charCode == 88) {
-        if( e.shiftKey ) {
-            video.pause();
-            playUntil = to_sec( document.getElementById("timer_stop").value );
-            video.currentTime = playUntil -3;
-            video.play();
-        } else {
-            document.getElementById("timer_stop").value = to_ts( video.currentTime );
-        };
-    };
     // C -> move end timestamp
     if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
     // Y/Z -> move end timestamp
