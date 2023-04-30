@@ -108,12 +108,25 @@ get '/cut/<*name>' => sub {
     if(! $ext) {
         warn "File '$file*' not found";
         return;
-    }
+    };
+
+    my @input_files = input_files();
+    my $curr = 0;
+    for my $f ( @input_files ) {
+        if( $f->{file} eq $base ) {
+            last
+        }
+        $curr++;
+    };
 
     $file .= $ext;
 
     my $info = fetch_config( $base );
-    $c->stash( file => basename($file), %$info  );
+    $c->stash( file => basename($file),
+               $curr < $#input_files ? ("next" => $input_files[$curr+1]) : ("next" => undef),
+               $curr > 0             ? (prev   => $input_files[$curr-1]) : (prev => undef),
+               %$info
+            );
     $c->render( template => 'cutname' );
 };
 
@@ -501,8 +514,16 @@ function to_ts(sec) {
 };
 </script>
 </head>
-<body id="mybody" onload="ready()">
-<a id="lnkIndex" href="/">Back</a><br />
+<body id="mybody" onload="javascript:ready()">
+<nav id="Navigation">
+   <a id="lnkIndex" href="/">Back</a>
+% if( $prev ) {
+ - <a id="lnkPrev" href="<%= $prev->{file} %>">Prev</a>
+% }
+% if( $next ) {
+ - <a id="lnkNext" href="<%= $next->{file} %>">Next</a>
+% }
+</nav>
 <video id="myvideo" preload="auto" controls >
     <source src="/video/<%= $file %>" type='video/mp4' />
 </video>
