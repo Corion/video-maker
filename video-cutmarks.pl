@@ -197,7 +197,16 @@ let commands = {
     },
     setStartCue: function() {
         document.getElementById("timer_start").value = to_ts( video.currentTime );
-    }
+    },
+    jumpToStartCue: function() {
+        video.currentTime = to_sec(document.getElementById("timer_start").value);
+    },
+    eraseStartCue: function() {
+        document.getElementById("timer_start").value = "";
+    },
+    saveCurrentState: function() {
+        saveForm({});
+    },
 };
 
 function doCommand(cmd) {
@@ -221,7 +230,7 @@ function onKeyboardInput(e) {
 
     // F -> save the current state
     if(charCode == 70) {
-        saveForm({});
+        doCommand('saveCurrentState');
     };
 
     if(charCode == 32) { doCommand('playPause' )};
@@ -234,7 +243,7 @@ function onKeyboardInput(e) {
     // shift+S -> play from start timestamp
     if(charCode == 83) {
         if( e.shiftKey ) {
-            video.currentTime = to_sec(document.getElementById("timer_start").value);
+            doCommand('jumpToStartCue');
         } else {
             doCommand('setStartCue');
         };
