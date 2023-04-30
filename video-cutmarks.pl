@@ -146,7 +146,8 @@ __DATA__
 </html>
 
 @@app.css
-video { width: 100% }
+#last_keycode { float: right; }
+video { width: 100%; }
 
 @@cutname.html.ep
 <!DOCTYPE html>
@@ -235,7 +236,7 @@ function onKeyboardInput(e) {
     var charCode = e.which || e.keyCode;
 
     let entry = e.shiftKey * 256 + charCode;
-    console.log("Keycode " +entry.toString(16));
+    document.getElementById("last_keycode").innerHTML = entry.toString(16);
     let cb = KeyboardMap[ entry ];
     if(cb) {
         cb(e);
@@ -344,7 +345,7 @@ function to_ts(sec) {
 <video id="myvideo" preload="auto" controls >
     <source src="/video/<%= $file %>" type='video/mp4' />
 </video>
-
+<span id="last_keycode">(no keypress)</span>
 <form method="POST" enctype="multipart/form-data" id="thatform" accept-charset="utf-8">
 <div id="controls">
     <div id="timer">00:00:00.0000</div>
