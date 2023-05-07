@@ -77,7 +77,6 @@ $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 
 %.titlecard.mkv: %.titlecard.png $(TITLECARD)
 	# Titlecard animieren
-	echo "<$(FFMPEG)>"
 	$(FFMPEG) \
 	$(FFMPEG_OPT) \
 		-i $< \
