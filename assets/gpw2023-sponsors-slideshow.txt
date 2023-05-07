@@ -1,0 +1,9 @@
+file 'gpw2023-sponsors-1-ui.png'
+duration 15
+file 'gpw2023-sponsors-2-otobo.png'
+duration 15
+file 'gpw2023-sponsors-3-geizhals.png'
+duration 15
+file 'gpw2023-sponsors-4-perl-services.png'
+duration 15
+file 'gpw2023-sponsors-5-payprop.png'
