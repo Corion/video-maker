@@ -75,6 +75,9 @@ The keybindings in the video cutter are:
         if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
         if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
 
+If you have a MIDI-enabled device connected and allow WebMIDI, you can also
+use that device for adjusting the cut markers.
+
 ## Setting up the rest of the pipeline
 
 There are other scripts you can use to add a frame around
