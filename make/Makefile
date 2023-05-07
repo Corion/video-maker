@@ -24,7 +24,7 @@ VIDEO=video
 include $(CONFIG)
 
 FFMPEG ?= $(which ffmpeg)
-$(info $(FFMPEG))
+$(info Using ffmpeg from $(FFMPEG))
 FFPROBE ?= $(which ffprobe)
 VF_SCALE ?= scale
 X264 ?= libx264
@@ -54,8 +54,8 @@ videos: $(VIDEOS)
 $(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
 	#		-s "$(TARGET_RESOLUTION)" \
-	echo $(AUDIO_SAMPLE_RATE)
-	$(FFPMEG) \
+	echo Audio sample rate $(AUDIO_SAMPLE_RATE)
+	$(FFMPEG) \
 	$(FFMPEG_OPT) \
 		-f concat -i $(TRAILER_SLIDESHOW) \
 		-f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=$(AUDIO_SAMPLE_RATE)" \
