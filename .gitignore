@@ -16,3 +16,4 @@ App-video-maker-*
 .releaserc
 cover_db
 MYMETA.*
+assets/*-title.svg.*
