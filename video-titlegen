@@ -42,20 +42,20 @@ close $out_fh;
 # Now use Inkscape (mwahahahha) to center the title and artist
 #
 
+#     text-container
 my @elements = (qw(
+    text-container
     text-title
     text-artist
-    text-container
 ));
 
 my $elements = join ",",@elements;
 my @commands = (
-    qw(
-    AlignHorizontalCenter
-    FileSave
-));
+    'object-align:hcenter',
+    'export-do',
+);
 
-my @cmd =( inkscape => $outname, "--batch-process", "--with-gui", "--select", join(",",@elements), "--verb", join ";", @commands );
+my @cmd =( inkscape => $outname, "--batch-process", "--with-gui", "--select", join(",",@elements), "--actions=". join ";", @commands );
 warn "[@cmd]";
 system(@cmd );
 #system(inkscape => $outname, "--batch-process", "--with-gui", "--verb",join( ';', @commands ));
