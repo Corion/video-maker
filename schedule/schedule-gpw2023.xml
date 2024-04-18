@@ -1,0 +1,758 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<schedule>
+    <!-- <generator name='gpw_schedule.pl' version='1.0'></generator> -->
+    <version>mkdir</version>
+    <conference>
+        <acronym>gpw2023</acronym>
+        <title>German Perl-/Raku-Workshop 2023</title>
+        <start>2023-02-27</start>
+        <end>2023-03-01</end>
+        <days>3</days>
+        <timeslot_duration>00:10</timeslot_duration>
+        <!-- <base_url>https://act.yapc.eu/gpw2022/</base_url> -->
+    </conference>
+
+    <day date='2023-02-27' end='2022-02-27T16:50:00+02:00' index='1' start='2022-02-27T10:00:00+02:00'>
+        <room name='main'>
+            <event guid='F98CAB54-AC0C-11EC-A6F2-23B1ED48A077' id='7800'>
+                <date>2022-02-27T10:00:00+02:00</date>
+	<start>10:00:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>willkommen-auf-dem-deutschen-perlraku-workshop-2022</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7800</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Willkommen auf dem Deutschen Perl/Raku Workshop 2023</title>
+                <subtitle></subtitle>
+                <track>GPW2023</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Willkommen!
+
+Kurze Vorstellung, organisatorische Kleinigkeiten und die Ankündigung des Orts für den nächsten GPW]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C95BA-AC0C-11EC-A6F2-23B1ED48A076' id='7782'>
+                <date>2022-03-30T10:20:00+02:00</date>
+                <start>10:20:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>corinnas-current-status</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7782</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Corinna&#39;s current status</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Corinna is a complete re-envisioning of object-oriented programming (OOP) in Perl. Previously, OOP in Perl was handled with bless() and the @ISA array. Everything else had to be wired together by the developer. There are, depending on what you consider to be an OOP system, over 80 candidates on the CPAN. Some are quite excellent. Most are hobbled by limitations of Perl syntax.
+
+Years in development, Corinna fixes this with a new, yet simple syntax which brings modern OOP programming to the Perl language. In many ways, it leapfrogs the capabilities of other dynamic languages and even approaches some of the capabilities of static languages, including the potential for many compile-time failures for what were previously runtime failures (or silent, difficult to detect bugs).]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1427'>Curtis Poe</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C91FA-AC0C-11EC-A6F2-23B1ED48A076' id='7779'>
+                <date>2022-03-30T11:20:00+02:00</date>
+                <start>11:20:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>praxisbericht-migration-der-webapp-otobo-von-cgi-nach-psgi</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7779</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Praxisbericht: Migration der Webapp OTOBO von CGI nach PSGI</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Historie von OTOBO. Die Basis ist über 20 Jahre alt und beruht auf CGI, Apache mit mod_perl.
+Phase I: Im Zuge von Docker-Support Unterstützung von Plack durch CGI::Emulate::PSGI. Webserver Gazelle.
+Phase II: Komplettumstellung auf Plack.
+Hürden: Die Punkte aus https://github.com/bschmalhofer/otobo-ideas#psgi-stumbling-blocks]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='176'>Bernhard Schmalhofer</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98CAA0A-AC0C-11EC-A6F2-23B1ED48A076' id='7799'>
+                <date>2022-03-30T12:10:00+02:00</date>
+                <start>12:10:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>on-the-road-to-2025-paul-evans</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7799</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>On The Road to 2025 (Paul Evans)</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[A presentation by Paul Evans]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9312-AC0C-11EC-A6F2-23B1ED48A076' id='7780'>
+                <date>2022-03-30T14:00:00+02:00</date>
+                <start>14:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>plotting-mit-perl</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7780</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Plotting mit Perl</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Stiftung Modultest für den angehenden Datenwissenschaftler und alle andere die ihre Daten anschaun wollen. Inklusieve Vorstellung einer eignen Lösung.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='2743'>Herbert Breunung</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9E48-AC0C-11EC-A6F2-23B1ED48A076' id='7788'>
+                <date>2022-03-30T14:50:00+02:00</date>
+                <start>14:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>plotten-mit-raku</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7788</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Plotten mit Raku</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Dieser Vortrag hat nicht zum Ziel die Dokumentation der gnuplotlib vorzulesen. Zum einen bietet modules.raku.org noch mehr uns zum Plot-Module. Zum Anderen möchte ich hervorheben, wie Raku-Idiome den Umgang mit Daten erleichtern. Aber geplottet wird trotzdem. Zuhörern empfehle ich auch meinen anderen Vortrag zu sehen weil in "plotten mit Perl" gehe ich auf mathematisches und optisches Wissen ein, das beim Plotten hilft.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='2743'>Herbert Breunung</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9452-AC0C-11EC-A6F2-23B1ED48A076' id='7781'>
+                <date>2022-03-30T15:30:00+02:00</date>
+                <start>15:30:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>satisfying-a-twitch-livestreaming-widgets-at-givengain</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7781</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Satisfying a Twitch - Livestreaming Widgets at GivenGain</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Details of how we added livestreaming widgets to our crowdfunding application, which is implemented in Perl using Mojolicious.
+
+We will cover some of the setup and technical considerations, along with messaging formats and backend technology - RabbitMQ and the Perl modules we use to interact with it.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='10652'>Lee Johnson</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9D44-AC0C-11EC-A6F2-23B1ED48A076' id='7787'>
+                <date>2022-03-30T16:00:00+02:00</date>
+                <start>16:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>lernen-mit-superkraften</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7787</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Lernen mit Superkräften</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Über die vergangenen 4 Jahre habe ich meine persönlichen Eigenschaften für das Lernen kontinuierlich immer weiter optimiert, und hatte damit unerwarteten Erfolg.
+
+Was ich so alles ausprobiert habe, was für kleine einfach Rezepte und neue Gewohnheiten mir dabei wie sehr geholfen haben, und auch was nicht so gut lief.
+
+Talk auf deutsch.
+
+(nach Möglichkeit zweisprachige Slides deutsch & englisch)]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='893'>Sören Laird Sörries</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98CA776-AC0C-11EC-A6F2-23B1ED48A076' id='7795'>
+                <date>2022-03-30T16:50:00+02:00</date>
+                <start>16:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>mein-c-standard-abenteuer</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7795</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Mein C Standard Abenteuer</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Wie fixe ich den C Standard, als Kurzabenteuer. Ein Überblick über die Prozesse, Working Groups, Papers, Compilerjungs, Unicode, Latex usw.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='4307'>Reini Urban</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+        </room>
+    </day>
+
+    <day date='2022-03-31' end='2022-03-31T15:00:00' index='1' start='2022-03-31T10:00:00'>
+        <room name='main'>
+            <event guid='F98CA212-AC0C-11EC-A6F2-23B1ED48A076' id='7791'>
+                <date>2022-03-31T10:00:00+02:00</date>
+                <start>10:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>covid-zertifikate-validieren-for-fun-and-sicherheit</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7791</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Covid Zertifikate validieren for Fun and .. Sicherheit?</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Für eine private Party habe ich ein kleines Perl-Script von Maroš Kollar, das einen Covid Test/Impf Zertifikat Validator implementiert, in eine kleine PSGI/Vue.js App eingebaut.
+
+In dem Talk schauen wir uns an, wie so ein Zertifikat aufgebaut ist, wie es geparst und validiert werden kann, und wie man das ganze dann in eine kleine Webapp einbauen kann.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='116'>Thomas Klausner</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98CA47E-AC0C-11EC-A6F2-23B1ED48A076' id='7792'>
+                <date>2022-03-31T10:50:00+02:00</date>
+                <start>10:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>werda-der-geizhals-anwesenheitsmonitor</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7792</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Werda - der Geizhals Anwesenheitsmonitor</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Teaser:
+Die DiY Attitüde liegt in den Genen von Geizhals (auch wenn wir da nicht mehr ganz so "verrückt" sind wie früher ;) und eines dieser selbst-entwickelten Tools ist die Werda ("Wer ist da") unser Anweseheistmonitor und Zeiterfassungstool mit vielen zusätzlichen Funktionen.
+
+Ursprünglich in Perl 5 entwickelt, habe ich Ende 2019 einen experimentellen Rewrite des in die Jahre gekommenen Codes in Perl6/Raku, Cro und VueJs gewagt.
+
+In diesem Talk zeige ich den grundlegenden Aufbau des Tools, sowohl vom Frontend als auch vom Backend, und erzähle von meinen ersten Gehversuchen und Problemen mit Raku.
+
+Abstract:
+Die Geizhals Werda ist vieles: Ein Anwesenheitsmonitor, eine Telefonanalagenübersicht, eine Zeiterfassungssystem, eine Anzeige für das Raumbuchungsystem, ein COVID-19 3G Zertifikatsprüfer, ein Chatbot, ein firmeninternes schwarzes Brett und letztendlich ein Experimentierfeld für neue Technologien.
+
+Ende 2019 habe ich die alte in Perl5 geschriebene Werda komplett in Raku neuimplementiert und im laufe der Zeit laufend mit neuen nützlichen und weniger nützlichen Funktionen erweitert.
+
+In diesem Talk zeige ich den grundlegenden Aufbau des Tools, der Cro API, des Cro Websocket Servers, der Telefonanlagenintegration, des Mattermost Chatbots (ein Slack Klon), Integration einer externen Zeiterfassungssoftware sowie einen kurzen Überblick über das VueJS Frontend.
+
+Zum schluss resümiere ich auch das subjektive good, the bad and the ugly von Cro und Raku.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='170'>Maroš Kollár</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C8DB8-AC0C-11EC-A6F2-23B1ED48A076' id='7776'>
+                <date>2022-03-31T11:30:00+02:00</date>
+                <start>11:30:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>anderungen-in-perl</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7776</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Änderungen in Perl</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[In jedem Jahr gibt es eine neue Major-Version von Perl. In diesem Vortrag zeige ich, was in Perl 5.34 (veröffentlicht 2021) neu im Vergleich zu Perl 5.32 ist. Außerdem werde ich einen Ausblick darauf geben, was (vermutlich) in Perl 5.36 (wird Mitte 2022 veröffentlicht) neu sein wird.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98CA05A-AC0C-11EC-A6F2-23B1ED48A076' id='7790'>
+                <date>2022-03-31T12:00:00+02:00</date>
+                <start>12:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>the-colleagues-you-didnt-know-you-had</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7790</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>The colleagues you didn&#39;t know you had</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Take a look at the code you use at your business.
+
+Do you know its dependencies? Do you know how much work has been put into these, and by who? Even if you do, chances are that your colleagues don't.
+
+In this presentation, Salve intends to a way to help increase our work colleagues' awareness of these too-often overlooked dependencies – and thereby help all of us a few steps closer toward a sustainable Open Source ecosystem, that we can depend on for years to come.
+
+There is an awareness deficit among our colleagues – How do Open Source projects and people influence the business? What value is gained or saved when the business depends on Open Source projects? What kind of relationships does the business have with these people?
+
+Let's take this first step to remedy this deficit – by introducing our Business colleagues to our Open Source colleagues.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='244'>Salve J. Nilsen</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C8F16-AC0C-11EC-A6F2-23B1ED48A076' id='7777'>
+                <date>2022-03-31T14:10:00+02:00</date>
+                <start>14:10:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>meine-erfahrungen-als-drive-by-modulautor</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7777</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Meine Erfahrungen als Drive-By-Modulautor</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Modulautoren haben nicht immer die Zeit und Muße, Patches durchzuschauen und ein Modul zu paketieren und veröffentlichen. Ich stelle die Schritte vor, wie ich Mitautor werde, um kleine Änderungen an Modulen zur Veröffentlichung zu bringen.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C96FA-AC0C-11EC-A6F2-23B1ED48A076' id='7783'>
+                <date>2022-03-31T15:00:00+02:00</date>
+                <start>15:00:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>serienmail-mit-perl-word-excel-und-pdf24</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7783</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Serienmail mit Perl, Word, Excel und PDF24</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Erstellen eines Mail-Templates aus einer empfangenen Mail.
+csv-Datenquellen in Word-Serienbrief für Anhänge und Versenden.
+PDF-Anhänge mit PDF24 splitten in eine Seite pro Datei.
+Mail versenden mit Testlauf und Log-Dateien]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='6741'>Wieland Pusch</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+        </room>
+    </day>
+
+    <day date='2022-04-01' end='2022-04-01T15:40:00' index='1' start='2022-04-01T10:00:00'>
+        <room name='main'>
+            <event guid='F98C87B4-AC0C-11EC-A6F2-23B1ED48A076' id='7775'>
+                <date>2022-04-01T10:00:00+02:00</date>
+                <start>10:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>owasp-top-ten-2021</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7775</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>OWASP Top Ten 2021</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Im Herbst 2021 wurde die aktualisierte Liste der Top 10 von Sicherheitsbedrohungen für Webanwendungen veröffentlicht. Dieser Vortrag stellt die neue Liste vor und zeigt zu einzelnen Punkten Beispiele aus Perl-Projekten.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C87B4-AC0C-11EC-A6F2-23B1ED48A077' id='7803'>
+                <date>2022-04-01T10:50:00+02:00</date>
+                <start>10:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>Chart.pm v 4.405- Herberts Plot</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7775</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Chart.pm 4.405</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract>Chart.pm v4.405</abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Herbert Breunung</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+	</event>
+            <event guid='F98CA668-AC0C-11EC-A6F2-23B1ED48A076' id='7794'>
+                <date>2022-04-01T11:30:00+02:00</date>
+                <start>11:30:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>offline-spracherkennung-mit-perl</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7794</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Offline-Spracherkennung mit Perl</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Offline-Spracherkennung (Speech-to-text) ist ein wichtiges Feature, wenn man auf seine Privatsphäre wert legt und nicht jedes gesprochen Wort mit Alexa, Siri oder Bixby teilen möchte.
+
+In dem Vortrag stelle ich das Modul Speech::Recognizer::Vosk vor. Ich gehe auf die Vorteile und Einschränkungen ein und mache eine Live-Demo.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9A42-AC0C-11EC-A6F2-23B1ED48A076' id='7784'>
+                <date>2022-04-01T12:00:00+02:00</date>
+                <start>12:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>rx-a-contextual-find-replacement-tool-based-on-regular-expressions</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7784</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Rx – A Contextual Find &amp; Replacement tool based on Regular Expressions</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Decades ago we were in the implementation of industry-first data-logging solution that capable of read machinery data’s through different industry protocols. It’s planned as a sensor to cloud solution had development for nearly 2 year and in its final stages of release.  We handled the web-technology part of that.
+
+It’s just crossed the challenge of MySQL to PostgreSQL migration due to license changes of earlier one. Due to industrial IT environment of that time, the deployment changed to on-premises implementation. It’s raised questions on protecting IP, Piracy, Software tampering & more.
+Finally a strategy taken to obfuscate the code, so we have chances to prevent some extend.
+
+Options were checked with standard grep tool and leading commercial solutions of the time, but none were near to solve it. The key challenge is make the replacement with logical flow that communicated in different languages. From a simple HTML element id replacement, to be continued with JS validation & PHP/Perl server handling. Sometimes it may have a CSS declaration. One thing came to clear is a simple find and replacement will not work. It seems end of road for obfuscation strategy. The management is hesitate to go on-premises without obfuscation.
+
+When we take-up the challenge, we had a glimmer of hope with one of our simple file traversal tool. But it seems tougher than our estimate and we are unable to find a flexible & extendable way to decode the multi-language part. Most of the time we resolved such challenges with real world alignment.  We had many inspirations from railways as a key algorithm provider.  That time also, we hit the bull's eye by implementing the century old food-delivery system of Mumbai Dabbawalas.
+
+It’s a tiffin box delivery system through public sub-urban train infrastructure in Indian city of Mumbai from your home to office and office to home every day. The entire system runs on their custom coding system, it’s a testimony of a swarm intelligence.  Perl given us ways to adopt it without the need of technical jargons like class, object, interface, roles, inheritance & unknown many more.
+
+I will share the story of how the real world inspirations helped us in implementation and how the Perl supports in creative thought adoption in overcoming non-linear challenges. It will gives an experience to participants to realize the power of scripting language.
+
+Now the system improved as a tool for code quality check & application cloning and few more.  Earlier we planned to make it open, but it delayed for years. Now i am planning to do it by this April]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='11914'>Raja Renga Bashyam</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9074-AC0C-11EC-A6F2-23B1ED48A076' id='7778'>
+                <date>2022-04-01T14:10:00+02:00</date>
+                <start>14:10:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>reverse-engineering-von-geraten-mit-perl</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7778</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Reverse Engineering von Geräten mit Perl</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[In dem Vortrag beschreibe ich, wie und warum ich Perl verwende, um mit obskuren Geräten zu kommunizieren und welche anderen Tools bei der Kommunikation mit USB- und WLAN-Geräten helfen.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98C9BE6-AC0C-11EC-A6F2-23B1ED48A076' id='7785'>
+                <date>2022-04-01T14:40:00+02:00</date>
+                <start>14:40:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>21st-century-skills</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7785</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>21st Century Skills</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Der Hype um die 21st Century Skills scheint sich nicht so schnell zu legen. In vergangenen Talks, hatte ich das scherzhaft aufgegriffen, aber nun im Ernst: Was soll das? Was sind denn diese 21st Century Skills? Warum wurde ein Hype darum gemacht? Was ist da eigentlich dran? Warum ist der noch nicht wieder verschwunden? Was machen wir Perl/Raku-Hacker:innen am Besten damit?
+
+The hype surrounding the 21st Century Skills doesn't seem to be going away anytime soon. In previous talks, I took this up as a joke; but am serious now: What is it about? What are these 21st Century Skills? Why was it made a hype? What is at the bottom of it? And why hasn't it disappeared yet? What should we Perl/Raku hackers best do about it?
+
+Talk auf deutsch, slides in English.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='893'>Sören Laird Sörries</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98CA884-AC0C-11EC-A6F2-23B1ED48A076' id='7796'>
+                <date>2022-04-01T15:10:00+02:00</date>
+                <start>15:10:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>news-from-the-yaml-world</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7796</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>News from the YAML world</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[I will give an update on what happened in the YAML world in the last two years.
+That includes perl modules, but also a quick glance at libraries in other languages.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='461'>Tina Müller</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+            <event guid='F98CAC62-AC0C-11EC-A6F2-23B1ED48A076' id='7801'>
+                <date>2022-04-01T15:40:00+02:00</date>
+                <start>15:40:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>verabschiedungvorschau-auf-den-gpw-2023</slug>
+                <!-- <url>https://act.yapc.eu/gpw2022/talk/7801</url> -->
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Verabschiedung+Vorschau auf den GPW 2023</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Rückblick und ein schönes Wiedersehen in 2023]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <!-- <scene>Orga-Screenshare (obs.ninja)</scene> -->
+                <video_download_url />
+            </event>
+        </room>
+    </day>
+</schedule>
