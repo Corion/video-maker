@@ -33,6 +33,11 @@ for f in *.mkv; do if [[ "$f" =~ (\ ) ]]; then echo mv -i "$f" "${f/ /-}"; fi; d
 Create a new config file below `cfg/` , preferrably by copying and editing
 an existing config file.
 
+## Preparing the schedule from Act
+
+* Download the schedule from [https://act.yapc.eu/gpw2021/export_talks]
+* Convert the file to XML using `schedule.pl` from [https://github.com/FrankfurtPM/GPW-scripts]
+
 ## Preparing the video trimming
 
 The first step is to run
