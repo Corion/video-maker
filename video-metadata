@@ -57,8 +57,10 @@ if( $schedule_file ) {
 }
 
 my $config = {
-    start => '00:00:00.0000',
-    stop  => '00:00:00.0000',
+    cutmarks => [{
+    inpoint => '00:00:00.0000',
+    outpoint  => '00:00:00.0000',
+    }],
     metadata => {
         title => $title,
         artist => $artist,
