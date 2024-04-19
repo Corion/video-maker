@@ -1,0 +1,9 @@
+file 'gpw2024-sponsors-1-cosmoshop.png'
+duration 15
+file 'gpw2024-sponsors-2-otobo.png'
+duration 15
+file 'gpw2024-sponsors-3-perl-services.png'
+duration 15
+file 'gpw2024-sponsors-4-geizhals.png'
+duration 15
+file 'gpw2024-sponsors-5-payprop.png'

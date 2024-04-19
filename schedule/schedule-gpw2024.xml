@@ -1,0 +1,941 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<schedule>
+    <generator name='gpw_schedule.pl' version='1.0'></generator>
+    <version>mkdir</version>
+    <conference>
+        <acronym>gpw2022</acronym>
+        <title>German Perl-/Raku-Workshop 2022</title>
+        <start>2022-03-30</start>
+        <end>2022-04-01</end>
+        <days>3</days>
+        <timeslot_duration>00:10</timeslot_duration>
+    </conference>
+
+    <day date='2024-04-15' end='2024-04-15T15:50:00+02:00' index='1' start='2024-04-15T09:00:00+02:00'>
+        <room name='main'>
+            <event guid='33D14724-FD60-11EE-A8D2-8FF1BF2C7D29' id='7879'>
+                <date>2024-04-15T09:00:00+02:00</date>
+                <start>09:00:00</start>
+                <duration>01:00</duration>
+                <room>main</room>
+                <slug>anmeldung-und-registrierung</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Anmeldung und Registrierung</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language></language>
+                <abstract><![CDATA[Anmeldung, Badges]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D148FA-FD60-11EE-A8D2-8FF1BF2C7D29' id='7882'>
+                <date>2024-04-15T10:00:00+02:00</date>
+                <start>10:00:00</start>
+                <duration>00:10</duration>
+                <room>main</room>
+                <slug>willkommen-auf-dem-deutschen-perlraku-workshop-2024</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Willkommen auf dem Deutschen Perl/Raku Workshop 2024</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Willkommen auf dem Workshop]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D139D2-FD60-11EE-A8D2-8FF1BF2C7D29' id='7861'>
+                <date>2024-04-15T10:10:00+02:00</date>
+                <start>10:10:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>programmieren-mit-ki</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Programmieren mit KI</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Wird KI den Beruf der Softwareentwickler:innen unnötig machen? Ich weiß es nicht. Ich will in dem Vortrag an Hand von ein paar Beispielen zeigen, wo man sich die KI zu Nutze machen kann. Ich werde dabei ChatGPT, codeium und andere Tools nutzen.
+
+Dieser Vortrag wird viel Live-Coding enthalten und ein kleiner Appetizer sein, um sich mal mit der KI-unterstützten Programmierung zu beschäftigen.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D1387E-FD60-11EE-A8D2-8FF1BF2C7D29' id='7859'>
+                <date>2024-04-15T10:55:00+02:00</date>
+                <start>10:55:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>cpan-modules-in-the-opensuse-build-service</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>CPAN Modules in the openSUSE Build Service</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[I want to show you how we manage and automate building CPAN modules in the openSUSE Build Service (OBS).
+Also OBS can be used as a CI for your module.
+
+You can find the topics I talk about on my blog: https://perlpunk.github.io/]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='461'>Tina Müller</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13CDE-FD60-11EE-A8D2-8FF1BF2C7D29' id='7866'>
+                <date>2024-04-15T11:35:00+02:00</date>
+                <start>11:35:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>aithis-talk-is-always-out-of-date</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>AI—This Talk is Always Out of Date</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[The field of LLM-based AI is evolving so rapidly that cutting news last week is old news today. It's hard to make sense of what's going on and, worse, there's talk that the career of software development is going to die.
+
+We'll explore what we do and do not know, and give you some useful tips for remaining relevant in the face of change.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1427'>Curtis Poe</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D132FC-FD60-11EE-A8D2-8FF1BF2C7D29' id='7853'>
+                <date>2024-04-15T13:45:00+02:00</date>
+                <start>13:45:00</start>
+                <duration>01:00</duration>
+                <room>main</room>
+                <slug>work-it-make-it-clearer-faster</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Work It, Make It, Clearer, Faster</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Make it work. Make it right. Make it fast.
+
+What does this all mean?
+
+Refactoring a small method to pass all three requirements, explaining each in turn.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='10652'>Lee Johnson</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13112-FD60-11EE-A8D2-8FF1BF2C7D29' id='7850'>
+                <date>2024-04-15T15:05:00+02:00</date>
+                <start>15:05:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>farbreich-mit-perl-5</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Farbreich mit Perl 5</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[GTC (Graphics::Toolkit::Color) ist ein neues Modul um Farbwerte zu berechnen, zu konvertieren, und um Farbpaletten zu berechnen.
+
+Ich möchte hier erklären wie Farbwahrnehmung entstehen und warum es die verschiedenen Farbsysteme gibt, die GTC unterstützt. Auf die Nutzer-API will ich auch eingehen, aber vor allem die Gelegenheit nutzen um zu demonstrieren wie man Kode gut organisieren kann (OO perl Komposition in Anwendung).]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='2743'>Herbert Breunung</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D137C0-FD60-11EE-A8D2-8FF1BF2C7D29' id='7856'>
+                <date>2024-04-15T15:50:00+02:00</date>
+                <start>15:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>shopsoftware-in-perl-seit-25-jahren-herausforderungen-und-aussicht-im-detail</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Shopsoftware in Perl - seit 25 Jahren. Herausforderungen und Aussicht im Detail</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Mit Einführung der Shopsoftware CosmoShop im Jahr 1999 hat sich das Unternehmen und zeitgleich auch die Software zigfach neu erfunden. Getrieben von Anforderungen des Marktes, Veränderung der  Zielgruppe und der Ausrichtung und schlußendlich auch der Wunsch, alle Systeme immer updatefähig zu halten war das Unternehmen gezwungen das System kontinuierlich zu refactoren, umzubauen und zu modernisieren.
+Das war nicht immer leicht, denn andere Frameworks, Programmiersprachen und sonstige Störfeuer flüsterten ständig böse Worte ins Ohr: "baue alles neu", "lasse alles hinter Dir", "Perl ist veraltet, nimm php" usw. Das Gegenteil wurde gemacht. Aus einem kurzen Ausflug zu Shopware wurde die überzeugte Rolle Rückwärts und nun arbeitet CosmoShop mit doppelt so viel Herzblut am eigenen Produkt und ist stolz darauf, was in den vielen Jahren entstanden ist.
+
+Download/Slideshare:
+perl 25 years in shopsoftware EN - https://de.slideshare.net/secret/naAiSYEkMWWdE6
+------------
+perl 25 jahre in shopsoftware DE https://de.slideshare.net/secret/GSvea2ZY2n01pT]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='12606'>Silvan Dolezalek</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+        </room>
+    </day>
+
+    <day date='2024-04-16' end='2024-04-16T16:40:00+02:00' index='1' start='2024-04-16T10:00:00+02:00'>
+        <room name='main'>
+            <event guid='33D147D8-FD60-11EE-A8D2-8FF1BF2C7D29' id='7880'>
+                <date>2024-04-16T10:00:00+02:00</date>
+                <start>10:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>endstation-k8s-erkan-yanar</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Endstation K8s (Erkan Yanar)</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Wir schauen uns mal an was wir mit Kubernetes so an Möglichkeiten bekommen. Selbstredend nicht ansatzweise alles. Aber doch  so viel, dass ihr alle wechselt.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D1430A-FD60-11EE-A8D2-8FF1BF2C7D29' id='7873'>
+                <date>2024-04-16T10:40:00+02:00</date>
+                <start>10:40:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>perl-im-container</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Perl im Container</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Wie und warum wir unseren eigenen Container mit Perl verwenden.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1854'>Michael Lang</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D14256-FD60-11EE-A8D2-8FF1BF2C7D29' id='7872'>
+                <date>2024-04-16T11:20:00+02:00</date>
+                <start>11:20:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>code-coverage-for-merge-requests-with-gitlab-and-develcover</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Code coverage for merge requests with GitLab and Devel::Cover</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[GitLab can show code coverage as part of the Merge Request interface:
+
+https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html
+
+We have this working at work - how did we get there, and what did we learn along the way?
+
+The first part of the talk is an overview of code coverage with Devel::Cover:
+* How easy it is to get a report of coverage
+* Subroutine, statement, branch and condition coverage
+* When to stop
+
+The second part is getting from file:/// to GitLab
+* Generating Cobertura format XML
+* Getting GitLab CI to upload this correctly
+* Faking Devel::Cover data for empty files
+* Publishing the full Devel::Cover reports with Gitlab Pages
+* Trying to do this locally without GitLab
+
+Bonus slides - anything else we get working in the next 3 weeks]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='67'>Nicholas Clark</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13626-FD60-11EE-A8D2-8FF1BF2C7D29' id='7855'>
+                <date>2024-04-16T13:30:00+02:00</date>
+                <start>13:30:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>hip-hop-hooks-wie-der-cosmoshop-mit-generischen-hookpoints-in-perl-objekten-umspringt</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Hip-Hop-Hooks | Wie der CosmoShop mit generischen Hookpoints in Perl-Objekten umspringt</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[CosmoShop ist das weltgrößte rein perlbasierte Shopsystem und besteht seit 1999. 
+In den 27 Jahren hat sich das System stetig gewandelt, neu erfunden und unterliegt einem stetigen Refactoring. 
+Schon vor 15 Jahren begann CosmoShop mit dem Aufbau einer eigenen Cloud, noch weit vor Shopify und anderen Marktbegleitern. 
+Die technischen Anforderungen stiegen mit den Jahren. Heute ist es Usus, dass individuelle Kundenwünsche auch in der Cloud umgesetzt werden können. Ständige Updatefähigkeit ist eine Grundvoraussetzung für jede Software geworden. 
+Daher führte CosmoShop Hookpoints ein, die es ermöglicht Plugins für individuelle Funktionen zu schreiben und den Core dabei nicht verändern zu müssen. 
+Wie genau das Konzept aussieht, wird im Vortrag erklärt.
+
+Download Slides:
+https://de.slideshare.net/secret/WiygscLSmzzGW]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='9137'>Ralf Schwab</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D14684-FD60-11EE-A8D2-8FF1BF2C7D29' id='7877'>
+                <date>2024-04-16T13:55:00+02:00</date>
+                <start>13:55:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>koha-open-source-ambassadors-initiative</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Koha Open Source Ambassadors Initiative</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Koha is capable, free and open-source library management system, in active development and rising trend, so many libraries are happy switching to it nowadays.
+
+What help we need from a Koha Ambassador?
+
+- Advocate for the transition to Koha
+- Provide guidance and support during the migration process or intercommunicate transition process with us (me and other people around)
+- if you wish, you can contribute to the development of open-source code.
+
+We (me and my people) will help you to learn about Koha, transitions, and what to say for end users. Your step is to convince libraries to switch, and we together will do that.
+
+You will help for Perl to expand and exist, but also you might have one customer nearby you for consultancy (or you can toss them for me/us or I can support them together with you).
+
+I will provide details, site, point of connection and later - trainings in advocating Koha usage and developer/sysadmin hints.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D12C44-FD60-11EE-A8D2-8FF1BF2C7D29' id='7845'>
+                <date>2024-04-16T14:20:00+02:00</date>
+                <start>14:20:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>neues-in-perl-540</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Neues in Perl 5.40</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[In jedem Jahr gibt es eine neue Version von Perl, die auch immer neue Features mitbringen. Wie bei den vergangenen beiden Workshops, werde ich auch diesmal die Neuerungen vorstellen, die das neue Perl so mitsichbringt.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13914-FD60-11EE-A8D2-8FF1BF2C7D29' id='7860'>
+                <date>2024-04-16T14:45:00+02:00</date>
+                <start>14:45:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>making-humans-want-to-be-developers</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Making humans want to be developers</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[I'm going to explain why offering work experiences (Praktikum) is a good idea, and how to structure them.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='8609'>Julien Fiegehenn</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13234-FD60-11EE-A8D2-8FF1BF2C7D29' id='7852'>
+                <date>2024-04-16T15:25:00+02:00</date>
+                <start>15:25:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>perl-at-payprop</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Perl at PayProp</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[PayProp chose Perl over twenty years ago when they bootstrapped their business. Today the backend is still Perl, but has changed. This is a short talk about how we are modernising the stack and contributing back to open source software.
+
+A short talk about some of the tools and techniques PayProp are using to modernise their Perl stack, including some of the issues and challenges. The areas covered will include:
+
+* Moving from a CGI.pm based framework to Mojolicious
+* Adding an ORM and business objects, via DBIx::Class and Moose
+* Refactoring existing functionality with help from regression tests
+* Contributing and maintaining distributions on CPAN
+* Hiring developers and introducing them to Perl]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='10652'>Lee Johnson</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13036-FD60-11EE-A8D2-8FF1BF2C7D29' id='7849'>
+                <date>2024-04-16T15:50:00+02:00</date>
+                <start>15:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>content-security-policy-der-alleskonner-header</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Content-Security-Policy - der Alleskönner-Header</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Wer Webanwendungen entwickelt, muss sich nicht nur Gedanken um die fachlichen Funktionalitäten machen. Es gibt so viele Möglichkeiten, an denen Angreifer versuchen können, Schwachstellen der Anwendung auszunutzen. Dabei geht es nicht immer darum, auf den Server zu gelangen. Häufig geht es darum, die Besucher der Webseite hinter das Licht zu führen.
+
+Das können zum Beispiel Cross-Site-Scripting-Lücken (XSS) sein, um Informationen über den Besucher an die Angreifer zu schicken, oder die Originalseite in einem (großen Frame) einzubetten um den Besuchern vorzugaukeln, sie wären auf der Originalseite.
+
+Es gibt noch viel mehr Dinge, die man als Entwickler:in zu beachten hat. Einige Angriffspunkte kann man durch den Browser schließen lassen, wenn man diesem sagt, wie er sich zu verhalten hat.
+
+Ich zeige, was der HTTP-Header Content-Security-Policy so alles kann.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13AC2-FD60-11EE-A8D2-8FF1BF2C7D29' id='7863'>
+                <date>2024-04-16T16:15:00+02:00</date>
+                <start>16:15:00</start>
+                <duration>00:10</duration>
+                <room>main</room>
+                <slug>aiollama-perl-interface-zu-ollama-modellen</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>AI::Ollama - Perl-Interface zu Ollama Modellen</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[KI Modelle offline zu nutzen ist interessant wenn man
+
+* offline ist
+* die Informationen nicht teilen möchte (Source code, Bilder, ...)
+* eigene Infrastruktur hat]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13B8A-FD60-11EE-A8D2-8FF1BF2C7D29' id='7864'>
+                <date>2024-04-16T16:25:00+02:00</date>
+                <start>16:25:00</start>
+                <duration>00:10</duration>
+                <room>main</room>
+                <slug>mein-eigener-openapi-generator</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Mein eigener OpenAPI Generator</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[OpenAPI ist ein Beschreibungsformat für APIs. Wenn eine Beschreibung gut gemacht ist, beschreibt es die Interaktion zwischen Client und Server recht genau.
+
+Der Vortrag schaut darauf, wie man aus einer OpenAPI Spezifikation einen Perl Client erstellen kann. Weiterhin wird auf die Balance in der Komplexität zwischen erzeugtem Code erzeugenden Codes eingegangen.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D14864-FD60-11EE-A8D2-8FF1BF2C7D29' id='7881'>
+                <date>2024-04-16T16:40:00+02:00</date>
+                <start>16:40:00</start>
+                <duration>01:00</duration>
+                <room>main</room>
+                <slug>lightning-talks</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Lightning Talks</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Vorträge mit einer Dauer von (maximal) 5 Minuten - der ideale Weg, Euer Lieblingsmodul oder Eure Lieblingsfernsehserie vorzustellen oder einfach nur erste Erfahrung zu sammeln mit einem Kurzvortrag]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+        </room>
+    </day>
+
+    <day date='2024-04-17' end='2024-04-17T16:10:00+02:00' index='1' start='2024-04-17T10:00:00+02:00'>
+        <room name='main'>
+            <event guid='33D13F54-FD60-11EE-A8D2-8FF1BF2C7D29' id='7870'>
+                <date>2024-04-17T10:00:00+02:00</date>
+                <start>10:00:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>testing-unfriendly-code-a-crash-course-in-stunt-programming</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Testing Unfriendly Code - a crash course in stunt programming</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[At my employer we have of batch scripts, which were written ages ago, do their thing wonderfully, and reliably earn their keep month in month out.
+
+Problem is, that we want to edit some of them. They don't have tests. They were never written with testing in mind. We'd need to refactor them to easily write tests for them, but we don't want to refactor them *until* we have tests.
+
+How do we solve this conundrum?
+
+This talk will explain the techniques we developed to run scripts in testing byte-for-byte unchanged, but with code injected so that we could subvert the control flow to write thorough tests.
+
+Don't do this at home.
+Don't do this in production.
+Don't do this in new code.
+Don't do this for any longer than you have to.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='67'>Nicholas Clark</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D1410C-FD60-11EE-A8D2-8FF1BF2C7D29' id='7871'>
+                <date>2024-04-17T10:40:00+02:00</date>
+                <start>10:40:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>the-spawn-of-stunt-programming-exorcising-the-demons-in-your-tests</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>The Spawn of Stunt Programming - exorcising the demons in your tests</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[This is the followup to the stunt programming talk - remember
+
+Don't do this at home.
+Don't do this in production.
+Don't do this in new code.
+Don't do this for any longer than you have to.
+Don't put it on YouTube for everyone to see...
+
+So we ignored all of that advice and went ahead and created tests.
+We used to have a bunch of command line scripts without tests, and no safe way to change them
+
+Now we have tests, and we can slowly change those scripts without risking our salaries. Everything is better now, right? The deployed code certainly is...
+
+But oh my, look at our test directory. Would you believe how complex it is to reliably override CORE::GLOBAL::open? All to inject contents for one file that one script opens. And then we do it again in a second copy because a second script needs a different file. And overriding readdir etc
+
+Production is fine, but we're accumulating technical debt so quickly that there's the risk of a demonic portal opening next time CI runs - and I hate to think what the AWS bill for that service is...
+
+So here is the next phase of the testing story - how we reduced the need for blunt override libraries by careful use of temporary directories, @INC ordering, log4perl configs and more.
+
+(How much more is a small matter of Conference Driven Development, and how late my train is.)]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='67'>Nicholas Clark</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D143C8-FD60-11EE-A8D2-8FF1BF2C7D29' id='7874'>
+                <date>2024-04-17T11:20:00+02:00</date>
+                <start>11:20:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>manipulating-3d-objects-in-perl</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Manipulating 3D Objects in Perl</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[This is a definition of a 3D scene:
+
+    sphere;
+
+It relies on sensible defaults for position, color and lighting, but it should be enough.
+With Perl, we can display this scene as a PNG file, or load it into a UI for further manipulation.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='12324'>Harald Jörg</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D1453A-FD60-11EE-A8D2-8FF1BF2C7D29' id='7875'>
+                <date>2024-04-17T13:30:00+02:00</date>
+                <start>13:30:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>mariadb-mysql-database-mechanic-performing-mro-operations-efficiently</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>MariaDB &amp; MySQL Database Mechanic - Performing MRO operations efficiently</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Though most of us know the importance of clean DB standards, at the same time all have our own variances in implementing it. Especially for small teams with multi-role developers, it's a challenge to keep track of it.
+
+In spite of paying high prices for ignoring DB standards, we had continuous challenges in following best practices in high development times.  Practices like inconsistent naming, varied field sizes for the same purpose, ignoring relation setups, ignoring proper indexes, varied char set & collations, unjustified default values & null cases and a few more continued for a long time and it become a habit. The primary challenge that we observed is our laziness to do the manual repetitive stuff, ignoring the best practices in tight timelines. Also, the absence of documentation and manual processes stopped the juniors from carrying it out.
+
+To overcome these challenges, we developed a repair tool that automates repetitive actions through configuration. This tool handles tasks ranging from simple field size alterations to complex trigger query creation, catering to every requirement. For every need, an action performer module was implemented to take inputs from a CSV file. The CSV based implementation helped in smoother execution and also served as a documentation to make test automation.
+
+Now we are able to do MRO operations in DB effectively. Earlier the code was highly coupled with our internal library. Now we made it a separate app and planned to make it open to serve similar needs.
+
+In this talk, I will share the use cases with hands-on-usage.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='11914'>Raja Renga Bashyam</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D134C8-FD60-11EE-A8D2-8FF1BF2C7D29' id='7854'>
+                <date>2024-04-17T13:50:00+02:00</date>
+                <start>13:50:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>anoman-x-ways-to-fetch-analysis-a-custom-reporting-framework-for-linear-data</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Anoman - X ways to fetch &amp; analysis, a custom reporting framework for linear data</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[Anoman report frame work virtually builds a SQL SELECT statement based on user inputs. Anoman conceptualized and continually evolved by customer requirements and use cases. In one of our software implementation, we have a task to implement almost 70 pre-defined reports on one table. A team of few, we don’t have much hands to develop it. Our organization principles are highly influenced by TQM. In that direction we thought to have only one interface to fetch the data as the way they user need it. We highly looked the possibility of reuse in future needs to attain long time benefit.
+
+The custom report implemented with the options to SELECT information fields, WHERE filters, GROUP BY values, BETWEEN date filters and ORDER BY fields as the way the user need it. It has given an unlimited freedom to pick & analysis the data in different dimensions. The system incrementally improved with new features in each installation. Features like, bookmark the report selection, aggregate results, graphical display, etc added in further versions. 
+
+The report configuration implemented in simple Hashes of Hashes structure. It’s helped to implement the system with semi skilled resources through a Standard Operation Procedure. Hash based configuration came handy in transforming real time tweaks with ease. The user selection finally transformed to a SQL query like SELECT a as A, b as B, c as C FROM d WHERE e IN (1,2) AND f=’g’ AND h BETWEEN i AND j GROUP BY k ORDER BY l,m.
+
+Anoman implemented in different domains like project management, whole sale trading and few other information systems in a short span. The system highly coupled with legacy internal environment that implemented in CGI::Ajax. Now we are improving it to an independent system, capable to support multiple output formats and smooth integration to external systems. With these improvements, we planned to make it open. Later the base concept later implemented to generate excel reports in a customized way.
+
+In this talk, I will share the tools inner components, existing use case and a short hands-on implementation.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='11914'>Raja Renga Bashyam</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D12DAC-FD60-11EE-A8D2-8FF1BF2C7D29' id='7846'>
+                <date>2024-04-17T14:10:00+02:00</date>
+                <start>14:10:00</start>
+                <duration>00:30</duration>
+                <room>main</room>
+                <slug>die-sichere-lieferkette-cpan</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Die sichere &quot;Lieferkette&quot; CPAN</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Im Rahmen meiner Masterarbeit habe ich mich mit dem Thema "Software Supply Chain Security" auseinandergesetzt und mir dabei CPAN-Module angeschaut. In diesem Vortrag werde ich vorstellen, was ich so gemacht habe...]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D13E28-FD60-11EE-A8D2-8FF1BF2C7D29' id='7869'>
+                <date>2024-04-17T15:00:00+02:00</date>
+                <start>15:00:00</start>
+                <duration>00:20</duration>
+                <room>main</room>
+                <slug>musings-on-generative-ai</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Musings on Generative AI</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>en</language>
+                <abstract><![CDATA[A whistlestop tour of the history of photography and why generative AI isn't that much different in many regards, but why it fails on one critical aspect.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='10652'>Lee Johnson</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D12EE2-FD60-11EE-A8D2-8FF1BF2C7D29' id='7847'>
+                <date>2024-04-17T15:25:00+02:00</date>
+                <start>15:25:00</start>
+                <duration>00:40</duration>
+                <room>main</room>
+                <slug>sicherheitselemente-fur-die-gitlab-pipeline-in-perl-projekten</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Sicherheitselemente für die Gitlab-Pipeline in Perl-Projekten</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Wir bei Perl-Services nutzen die Gitlab-Pipeline um unsere Projekte zu testen und zu bauen. Dabei haben wir auch verschiedene Sicherheitsaspekte im Blick. Dazu haben wir einige Jobs aufgebaut, die wir modular einsetzen können. Das geht von einfachen CPAN-Audit-Jobs bis zu Prüfungen ob "Geheimnisse" (Passwörter, API-Token, ...) im Repository sind.
+
+Ich möchte in dem Vortrag diese Jobs vorstellen und wie wir diese in unserer Pipeline einsetzen. Da die meisten Jobs in unserer OS-Gitlab-Instanz sind, können diese auch von den Teilnehmenden genutzt werden.]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='1275'>Renee Bäcker</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+            <event guid='33D14AEE-FD60-11EE-A8D2-8FF1BF2C7D29' id='7885'>
+                <date>2024-04-17T16:10:00+02:00</date>
+                <start>16:10:00</start>
+                <duration>00:10</duration>
+                <room>main</room>
+                <slug>verabschiedung</slug>
+                <recording>
+                    <license></license>
+                    <optout>false</optout>
+                </recording>
+                <title>Verabschiedung</title>
+                <subtitle></subtitle>
+                <track>GPW2022</track>
+                <type>lecture</type>
+                <language>de</language>
+                <abstract><![CDATA[Auf wiedersehen und gute Heimfahrt]]></abstract>
+                <description></description>
+                <logo></logo>
+                <persons>
+                    <person id='323'>Max Maischein</person>
+                </persons>
+                <links>
+                </links>
+                <attachments>
+                </attachments>
+                <video_download_url/>
+            </event>
+        </room>
+    </day>
+</schedule>
