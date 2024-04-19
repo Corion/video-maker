@@ -48,7 +48,8 @@ videos: $(VIDEOS)
 %.png: %.svg
 	inkscape --export-type=png --export-area-page -d 25.40 $< -o $@
 
-%.yml : | %.joined.mkv
+#%.yml : | %.joined.mkv
+%.yml : %.1.mkv
 	$(METADATA) $^ $| --show "$(SHOW)" --language deu --url-base "$(ACT_BASE)" -o $@
 
 $(TRAILER_SLIDESHOW): $(perl -nle 'print $1 if /file\s+.(.*?).$/' $(TRAILER_SLIDESHOW))
