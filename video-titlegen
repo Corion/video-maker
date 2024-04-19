@@ -51,12 +51,14 @@ my @elements = (qw(
 
 my $elements = join ",",@elements;
 my @commands = (
-    'object-align:hcenter',
+    "select-by-id:$elements",
+    'select-list',
+    'object-align:hcenter first',
     'export-do',
 );
 
-my @cmd =( inkscape => $outname, "--batch-process", "--with-gui", "--select", join(",",@elements), "--actions=". join ";", @commands );
+my @cmd =( inkscape => $outname, "--batch-process", "--export-overwrite", "--actions=". join ";", @commands );
 warn "[@cmd]";
-system(@cmd );
+system(@cmd);
 #system(inkscape => $outname, "--batch-process", "--with-gui", "--verb",join( ';', @commands ));
 #system(inkscape => $outname, "--batch-process", "--with-gui", "--verb",join( ';', @commands ));
