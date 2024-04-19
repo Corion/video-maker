@@ -37,7 +37,7 @@ METADATA_FILES := $(subst .1.mkv,.yml,$(INPUT_VIDEOS))
 VIDEOS := $(subst .yml,.final.mkv,$(wildcard $(VIDEO)/*.yml))
 TRAILER_ASSETS := $(shell perl -nle 'print "assets/$$1" if /file\s+.(.*?).$$/' $(TRAILER_SLIDESHOW))
 
-.PRECIOUS: %.yml %.middle.mkv
+.PRECIOUS: %.yml %.middle.mkv $(TRAILER_SLIDESHOW)
 .PHONY: prepare-cut videos trailer-assets
 
 metadata: $(METADATA_FILES)
