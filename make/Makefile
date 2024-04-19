@@ -35,15 +35,18 @@ DURATION_TRAILER ?=75
 INPUT_VIDEOS := $(wildcard $(VIDEO)/*.1.mkv)
 METADATA_FILES := $(subst .1.mkv,.yml,$(INPUT_VIDEOS))
 VIDEOS := $(subst .yml,.final.mkv,$(wildcard $(VIDEO)/*.yml))
+TRAILER_ASSETS := $(shell perl -nle 'print "assets/$$1" if /file\s+.(.*?).$$/' $(TRAILER_SLIDESHOW))
 
 .PRECIOUS: %.yml %.middle.mkv
-.PHONY: prepare-cut videos
+.PHONY: prepare-cut videos trailer-assets
 
 metadata: $(METADATA_FILES)
 
 prepare-cut: $(INPUT_VIDEOS) metadata
 
 videos: $(VIDEOS)
+
+trailer-assets: $(TRAILER_ASSETS)
 
 %.png: %.svg
 	inkscape --export-type=png --export-area-page -d 25.40 $< -o $@
@@ -52,9 +55,9 @@ videos: $(VIDEOS)
 %.yml : %.1.mkv
 	$(METADATA) $^ $| --show "$(SHOW)" --language deu --url-base "$(ACT_BASE)" -o $@
 
-$(TRAILER_SLIDESHOW): $(perl -nle 'print $1 if /file\s+.(.*?).$/' $(TRAILER_SLIDESHOW))
+$(TRAILER_SLIDESHOW): trailer-assets
 
-$(TRAILER): $(TRAILER_ASSETS) $(TRAILER_SLIDESHOW)
+$(TRAILER): trailer-assets $(TRAILER_SLIDESHOW)
 	# -v must come from the video, sample_rate as well
 	#		-s "$(TARGET_RESOLUTION)" \
 	echo Audio sample rate $(AUDIO_SAMPLE_RATE)
