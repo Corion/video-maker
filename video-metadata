@@ -25,7 +25,7 @@ my ($movie) = @ARGV;
 $title =~ s!^(20\d\d)-\d\d-\d\d(_[012]\d-\d\d-\d\d)?[-_]!!;
 $title =~ s![-_]! !g;
 
-$url_base ||= 'https://act.yapc.eu/gpw2022/talk/';
+$url_base ||= 'https://act.yapc.eu/gpw2024/talk/';
 
 if( $schedule_file ) {
     require C3VOC::Schedule;
