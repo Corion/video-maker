@@ -125,6 +125,7 @@ get '/cut/<*name>' => sub {
     my $base = encode('UTF-8', decode_name($c->param('name')));
     my $file = $config{VIDEO} .'/'. $base . ".1.";
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
+    my $mark = $c->param('cutmark') // 0;
 
     if(! $ext) {
         warn "File '$file*' not found";
@@ -146,6 +147,7 @@ get '/cut/<*name>' => sub {
     $c->stash( file => basename($file),
                $curr < $#input_files ? ("next" => $input_files[$curr+1]) : ("next" => undef),
                $curr > 0             ? (prev   => $input_files[$curr-1]) : (prev => undef),
+               cutmark => $mark,
                %$info
             );
     $c->render( template => 'cutname' );
@@ -167,6 +169,7 @@ post '/cut/<*name>' => sub {
     # This should be corrected, by allowing more cutmarks in the UI itself too
     my $info = {
         cutmarks => [{
+    my $cutmark = $c->param('cutmark')+0;
             inpoint  => $c->param('start'),
             outpoint => $c->param('stop'),
             file     => $filename_unicode,
@@ -219,6 +222,10 @@ let playUntil;
 
 let midiInput;
 let midiOutput;
+
+function currentTrack() {
+    return parseInt( document.getElementById("cutmark").value, 10 );
+}
 
 function saveForm(e) {
     let http = new XMLHttpRequest();
@@ -293,8 +300,8 @@ let commands = {
     },
     playToEndCue: function() {
         video.pause();
-        playUntil = to_sec( document.getElementById("timer_stop").value );
-        video.currentTime = playUntil -3;
+        cutmarks[ currentTrack() ].playUntil = to_sec( document.getElementById("timer_stop").value );
+        video.currentTime = cutmarks[ currentTrack() ].playUntil -3;
         video.play();
     },
     eraseEndCue: function() {
@@ -503,9 +510,11 @@ function ready() {
     video = document.getElementById("myvideo");
     video.addEventListener('timeupdate', function() {
         document.getElementById("timer").innerHTML = to_ts( video.currentTime );
-        if( playUntil && video.currentTime >= playUntil ) {
+        if( cutmarks[ currentTrack() ].playUntil && video.currentTime >= cutmarks[ currentTrack() ].playUntil ) {
             video.pause();
-            playUntil = undefined;
+            // should we switch to currentTrack+1 here?!
+            // and only stop otherwise?!
+            cutmarks[ currentTrack() ].playUntil = undefined;
         };
     });
     let btnSave = document.getElementById("btnSave");
@@ -583,14 +592,43 @@ function to_ts(sec) {
 <form method="POST" enctype="multipart/form-data" id="thatform" accept-charset="utf-8">
 <div id="controls">
     <div id="timer">00:00:00.0000</div>
-    <button onclick="javascript:stepff('timer_start', -0.1); return false">&lt;</button>
-    <input type="text" id="timer_start" name="start" value="<%= $cutmarks->[0]->{inpoint} %>" />
-    <button onclick="javascript:stepff('timer_start', +0.1); return false">&gt;</button>
-    </div><div>
-    <button onclick="javascript:stepff('timer_stop', -0.1); return false">&lt;</button>
-    <input type="text" id="timer_stop" name="stop" value="<%= $cutmarks->[0]->{outpoint} %>" />
-    <button onclick="javascript:stepff('timer_stop', +0.1); return false">&gt;</button>
-    </div>
+    <table>
+% for my $mark (0..$#$cutmarks) {
+    <tr>
+%     if( $mark == $cutmark ) {
+    <input type="hidden" id="cutmark" name="cutmark" value="<%= $cutmark %>" />
+    <input type="hidden" id="cutmark" name="action" value="edit" />
+    <td>
+        <button onclick="javascript:stepff('timer_start', -0.1); return false">&lt;</button>
+    </td><td>
+        <input type="text" id="timer_start" name="start" value="<%= $cutmarks->[$mark]->{inpoint} %>" />
+    </td><td>
+        <button onclick="javascript:stepff('timer_start', +0.1); return false">&gt;</button>
+    </td>
+    <td>
+        <button onclick="javascript:stepff('timer_stop', -0.1); return false">&lt;</button>
+    </td><td>
+        <input type="text" id="timer_stop" name="stop" value="<%= $cutmarks->[$mark]->{outpoint} %>" />
+    </td><td>
+        <button onclick="javascript:stepff('timer_stop', +0.1); return false">&gt;</button>
+    </td>
+%     } else {
+    <td>
+    </td><td>
+    <a href="<%= url_with->query({ cutmark => $mark }) %>">
+        <%= $cutmarks->[$mark]->{inpoint} %>
+    </a>
+    </td><td>
+    </td>
+    <td>
+    </td><td>
+        <%= $cutmarks->[$mark]->{outpoint} %>
+    </td><td>
+    </td>
+%     }
+    </tr>
+% }
+    </table>
 </div>
 <label for="title">Title</label><input type="text" name="title" value="<%= $metadata->{title} %>" /><br />
 <label for="artist">Artist</label><input type="text" name="artist" value="<%= $metadata->{artist} %>" /><br />
@@ -600,7 +638,7 @@ function to_ts(sec) {
 <button type="submit" id="btnSave">Save</button>
 </form>
 
-<ul>
+<ul id="navigation-keyboard">
 <li><kbd>q</kbd> - move start point one second earlier</li>
 <li><kbd>shift+q</kbd> - move start point 0.1 second earlier</li>
 <li><kbd>e</kbd> - move start point one second later</li>
