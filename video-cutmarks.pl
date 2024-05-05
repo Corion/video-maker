@@ -482,6 +482,9 @@ async function setupMidiInput() {
         return null;
     }
 
+    document.getElementById('navigation-midi').style.display = 'block';
+    document.getElementById('navigation-keyboard').style.display = 'none';
+
     // access.statechange is fired when a device is connected/disconnnected
     // Hardcoded to the device(s) of interest:
     access.inputs.forEach( port => { if( port.name.match(/\bReloop\b/)) { midiInput = port } } );
@@ -653,6 +656,14 @@ function to_ts(sec) {
 <li><kbd>shift+g</kbd> - jump to end of video</li>
 <li><kbd>f</kbd> - save current cutmarks</li>
 <li><kbd>i</kbd> - go back to the index page</li>
+</ul>
+<ul id="navigation-midi">
+<li>play/pause - play/pause</li>
+<li>left jog - navigate</li>
+<li>parameter 1 - jump to start/end</li>
+<li>pad 1 - set inpoint</li>
+<li>shift+pad 1 - clear inpoint</li>
+<li>shift+pad 2 - clear outpoint</li>
 </ul>
 </body>
 </html>
