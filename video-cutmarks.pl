@@ -170,15 +170,29 @@ post '/cut/<*name>' => sub {
     $filename_unicode .= $ext;
     $file .= $ext;
     my $yml = yaml_file(decode_name($c->param('name')) . '.yml');
-    # Here we overwrite any manual other files/edits
     # This should be corrected, by allowing more cutmarks in the UI itself too
-    my $info = {
-        cutmarks => [{
+
+    # load the old cutmarks
+    my $old = fetch_config(decode_name($c->param('name')));
+    # Patch in the current cutmarks according to param('cutmark')
+    my $cutmarks = $old->{cutmarks};
     my $cutmark = $c->param('cutmark')+0;
+
+    my $action = $c->param('action');
+    if( $action eq 'edit') {
+        $cutmarks->[ $cutmark ] = {
             inpoint  => $c->param('start'),
             outpoint => $c->param('stop'),
             file     => $filename_unicode,
-        }],
+        };
+
+    } else {
+        # How do we handle deletions?!
+        die "Splicing on cutmarks is not yet implemented";
+    };
+
+    my $info = {
+        cutmarks => $cutmarks,
         metadata => {
             title => $c->param('title'),
             artist => $c->param('artist'),
