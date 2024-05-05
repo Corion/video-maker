@@ -6,6 +6,7 @@ no warnings 'experimental::signatures';
 
 use Mojolicious::Lite;
 use Mojolicious::Static;
+use Mojo::JSON 'encode_json';
 use Mojo::Util 'url_escape', 'url_unescape', 'decode', 'encode';
 use Cwd;
 use YAML 'LoadFile', 'Dump';
@@ -66,6 +67,10 @@ sub encode_name {
     my( $name ) = @_;
     return url_escape($name)
 }
+
+helper 'encode_json' => sub( $c, $info ) {
+    return encode_json($info)
+};
 
 get '/video/<*name>.1.<ext>' => sub {
     my( $c ) = @_;
@@ -448,6 +453,8 @@ let MidiMap = {
                     doCommand('nextEntry');
                 }
             },
+    0x900d : (d) => { doCommand('nextCutmark') },
+    0x900f : (d) => { doCommand('prevCutmark') },
 };
 
 function onMidiInput(e) {
