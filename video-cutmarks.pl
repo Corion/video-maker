@@ -223,7 +223,9 @@ video { width: 100%; }
 <script>
 "use strict";
 let video;
-let playUntil;
+
+// No - we should load these via a JSON API instead
+let cutmarks = <%== encode_json( $cutmarks ) %>;
 
 let midiInput;
 let midiOutput;
@@ -312,6 +314,36 @@ let commands = {
     eraseEndCue: function() {
         document.getElementById("timer_stop").value = "";
     },
+
+    nextCutmark: function() {
+        // Save current stuff
+        saveForm({});
+
+        // Now check if we can move one cutmark further:
+        if( currentTrack() < cutmarks.length-1 ) {
+            // We can move one further, so reload the page with the updated current track:
+            let q = new URLSearchParams(window.location.search);
+            q.set("cutmark", currentTrack()+1);
+            window.location.search = q.toString();
+        } else {
+            console.log("At end of cutmarks");
+        }
+    },
+    prevCutmark: function() {
+        // Save current stuff
+        saveForm({});
+
+        // Now check if we can move one cutmark further:
+        if( currentTrack() > 0 ) {
+            // We can move one previous, so reload the page with the updated current track:
+            let q = new URLSearchParams(window.location.search);
+            q.set("cutmark", currentTrack()-1);
+            window.location.search = q.toString();
+        } else {
+            console.log("At start of cutmarks");
+        }
+    },
+
     saveCurrentState: function() {
         saveForm({});
     },
