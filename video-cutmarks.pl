@@ -10,6 +10,7 @@ use Mojo::Util 'url_escape', 'url_unescape', 'decode', 'encode';
 use Cwd;
 use YAML 'LoadFile', 'Dump';
 use File::Basename;
+use POSIX qw(strftime);
 
 plugin AutoReload => {};
 
@@ -88,9 +89,9 @@ sub fetch_config {
             metadata => {
                 artist    => "",
                 language => "deu",
-                show => "German Perl/Raku Workshop 2023",
+                show => $config{ SHOW },
                 title => "",
-                url => "https://act.yapc.eu/gpw2023/talk/",
+                url => strftime( 'https://act.yapc.eu/gpw%Y/talk/', localtime()),
             },
         };
 
