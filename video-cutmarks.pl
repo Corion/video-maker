@@ -411,22 +411,6 @@ function onKeyboardInput(e) {
         cb(e);
         return;
     }
-
-    // XXX convert to doCommand
-    // Q -> step back a second
-    if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
-    // E -> step forward a second
-    if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
-
-    // D
-    if(charCode == 68) { stepff('timer_start',+1 * (e.shiftKey ? 0.1 : 1 ))};
-    // A
-    if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-    // C -> move end timestamp
-    if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
-    // Y/Z -> move end timestamp
-    if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
 }
 
 let MidiShift; // Shift key held
@@ -593,127 +577,7 @@ function ready() {
     let btnSave = document.getElementById("btnSave");
     btnSave.addEventListener('click', saveForm );
 
-<<<<<<< HEAD
     document.addEventListener('keydown', onKeyboardInput);
-||||||| parent of eaa67c5 (Add keyboard shortcuts)
-    document.addEventListener('keydown', function(e) {
-        e = e || window.event;
-        if( e.target.tagName == "INPUT" ) return;
-        var charCode = e.which || e.keyCode;
-
-        // I -> go back to index page
-        if(charCode == 73) {
-            var indexPage = document.getElementById("lnkIndex");
-            window.location.assign( indexPage.href );
-        };
-
-        // F -> save the current state
-        if(charCode == 70) {
-            saveForm({});
-        };
-
-        if(charCode == 32) { if (video.paused) { video.play() } else { video.pause() }};
-        // Q -> step back a second
-        if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
-        // E -> step back a second
-        if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // S -> Use as start timestamp
-        // shift+S -> play from start timestamp
-        if(charCode == 83) {
-            if( e.shiftKey ) {
-                video.currentTime = to_sec(document.getElementById("timer_start").value);
-            } else {
-                document.getElementById("timer_start").value = to_ts( video.currentTime );
-            };
-        };
-        // D
-        if(charCode == 68) { stepff('timer_start',+1 * (e.shiftKey ? 0.1 : 1 ))};
-        // A
-        if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // X -> use as end timestamp
-        // shift+X -> play to end timestamp
-        if(charCode == 88) {
-            if( e.shiftKey ) {
-                video.pause();
-                playUntil = to_sec( document.getElementById("timer_stop").value );
-                video.currentTime = playUntil -3;
-                video.play();
-            } else {
-                document.getElementById("timer_stop").value = to_ts( video.currentTime );
-            };
-        };
-        // C -> move end timestamp
-        if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
-        // Y/Z -> move end timestamp
-        if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // shift+G -> jump to end of video
-        if(charCode == 71) {
-            video.currentTime = video.duration;
-        };
-    });
-=======
-    document.addEventListener('keydown', function(e) {
-        e = e || window.event;
-        if( e.target.tagName == "INPUT" ) return;
-        var charCode = e.which || e.keyCode;
-
-        // I -> go back to index page
-        if(charCode == 73) {
-            var indexPage = document.getElementById("lnkIndex");
-            window.location.assign( indexPage.href );
-        };
-
-        // F -> save the current state
-        if(charCode == 70) {
-            saveForm({});
-        };
-
-        if(charCode == 32) { if (video.paused) { video.play() } else { video.pause() }};
-        // Q -> step back a second
-        if(charCode == 81) { stepff('',-1 * (e.shiftKey ? 0.1 : 1 ))};
-        // E -> step forward a second
-        if(charCode == 69) { stepff('',+1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // S -> Use as start timestamp
-        // shift+S -> play from start timestamp
-        if(charCode == 83) {
-            if( e.shiftKey ) {
-                video.currentTime = to_sec(document.getElementById("timer_start").value);
-            } else {
-                document.getElementById("timer_start").value = to_ts( video.currentTime );
-            };
-        };
-        // D
-        if(charCode == 68) { stepff('timer_start',+1 * (e.shiftKey ? 0.1 : 1 ))};
-        // A
-        if(charCode == 65) { stepff('timer_start',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // X -> use as end timestamp
-        // shift+X -> play to end timestamp
-        if(charCode == 88) {
-            if( e.shiftKey ) {
-                video.pause();
-                playUntil = to_sec( document.getElementById("timer_stop").value );
-                video.currentTime = playUntil -3;
-                video.play();
-            } else {
-                document.getElementById("timer_stop").value = to_ts( video.currentTime );
-            };
-        };
-        // C -> move end timestamp
-        if(charCode == 67) { stepff('timer_stop',+1 * (e.shiftKey ? 0.1 : 1 ))};
-        // Y/Z -> move end timestamp
-        if(charCode == 89 || charCode == 90) { stepff('timer_stop',-1 * (e.shiftKey ? 0.1 : 1 ))};
-
-        // shift+G -> jump to end of video
-        if(charCode == 71) {
-            video.currentTime = video.duration;
-        };
-    });
->>>>>>> eaa67c5 (Add keyboard shortcuts)
     document.getElementById("timer").focus();
 
     setupMidiInput().then(() => {
@@ -831,7 +695,6 @@ function to_ts(sec) {
 <button type="submit" id="btnSave">Save</button>
 </form>
 
-<<<<<<< HEAD
 <ul id="navigation-keyboard">
 <li><kbd>q</kbd> - move start point one second earlier</li>
 <li><kbd>shift+q</kbd> - move start point 0.1 second earlier</li>
@@ -855,41 +718,6 @@ function to_ts(sec) {
 <li>pad 1 - set inpoint</li>
 <li>shift+pad 1 - clear inpoint</li>
 <li>shift+pad 2 - clear outpoint</li>
-||||||| parent of eaa67c5 (Add keyboard shortcuts)
-<div id="keybindings">
-<tt>i</tt> - back to index<br/>
-<tt>f</tt> - save<br/>
-<tt>space</tt> - play/pause video<br/>
-<tt>q/e</tt> - step back/forward 1s<br/>
-<tt>Q/E</tt> - step back/forward 0.1s<br/>
-<tt>s</tt> - set start timestamp<br/>
-<tt>S</tt> - play from start timestamp<br/>
-<tt>a/d</tt> - step start back/forward 1s<br/>
-<tt>A/D</tt> - step start back/forward 0.1s<br/>
-<tt>x</tt> - set end timestamp<br/>
-<tt>X</tt> - play -3s before end timestamp<br/>
-<tt>X</tt> - play -3s before end timestamp<br/>
-<tt>y,z/c</tt> - step start back/forward 1s<br/>
-<tt>Y,Z/C</tt> - step start back/forward 0.1s<br/>
-</div>
-
-=======
-<ul>
-<li><kbd>q</kbd> - move start point one second earlier</li>
-<li><kbd>shift+q</kbd> - move start point 0.1 second earlier</li>
-<li><kbd>e</kbd> - move start point one second later</li>
-<li><kbd>shift+e</kbd> - move start point 0.1 second later</li>
-<li><kbd>s</kbd> - set video start point</li>
-<li><kbd>shift+S</kbd> - play video from start point</li>
-<li><kbd>d</kbd> - step video play position 1 second earlier</li>
-<li><kbd>a</kbd> - step video play position 1 second later</li>
-<li><kbd>x</kbd> - use current position as end position</li>
-<li><kbd>y/z</kbd> - move end position earlier</li>
-<li><kbd>c</kbd> - move end position later</li>
-<li><kbd>shift+g</kbd> - jump to end of video</li>
-<li><kbd>f</kbd> - save current cutmarks</li>
-<li><kbd>i</kbd> - go back to the index page</li>
->>>>>>> eaa67c5 (Add keyboard shortcuts)
 </ul>
 </body>
 </html>
