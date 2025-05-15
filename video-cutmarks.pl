@@ -41,7 +41,7 @@ sub yaml_file {
 
 # We want a sorted list of files so prev/next work
 sub input_files {
-    map { s/\.1.(mkv|MP4)$//i;
+    map { s/\.(mkv|MP4)$//i;
           my $f = basename(decode('UTF-8',$_));
           { file => encode_name($f),
             name => decode('UTF-8', basename($_)),
@@ -49,7 +49,7 @@ sub input_files {
         }
     }
     sort { $a cmp $b }
-    glob $config{VIDEO} . '/*.1.{MP4,mkv}'
+    glob $config{VIDEO} . '/*.{MP4,mkv}'
 }
 
 get '/' => sub {
@@ -72,13 +72,13 @@ helper 'encode_json' => sub( $c, $info ) {
     return encode_json($info)
 };
 
-get '/video/<*name>.1.<ext>' => sub {
+get '/video/<*name>.<ext>' => sub {
     my( $c ) = @_;
     my $ext = $c->param('ext');
     return unless $ext =~ /^(MP4|mkv)$/i;
     my $base = decode_name($c->param('name'));
     $base = decode('UTF-8', $base);
-    my $file = video_file( $base . ".1.$ext" );
+    my $file = video_file( $base . ".$ext" );
     $c->reply->static( $file );
 };
 
@@ -128,7 +128,7 @@ sub update_file( $filename, $new_content ) {
 get '/cut/<*name>' => sub {
     my( $c ) = @_;
     my $base = encode('UTF-8', decode_name($c->param('name')));
-    my $file = $config{VIDEO} .'/'. $base . ".1.";
+    my $file = $config{VIDEO} .'/'. $base . '.';
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));
     my $mark = $c->param('cutmark') // 0;
 
@@ -162,7 +162,7 @@ post '/cut/<*name>' => sub {
     my( $c ) = @_;
     # This should be based on the names in the .yml instead of guessing the name
     # from the central base, but whatever
-    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".1.";
+    my $file = $config{VIDEO} .'/'. decode_name($c->param('name')) . ".";
     my $filename_unicode = $file;
     $file = encode('UTF-8', $file);
     (my $ext) = grep { -f $file . $_ } (qw(MP4 mkv));

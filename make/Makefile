@@ -32,8 +32,8 @@ TARGET_RESOLUTION ?= 1920x1080
 DURATION_HEADER ?=10
 DURATION_TRAILER ?=75
 
-INPUT_VIDEOS := $(wildcard $(VIDEO)/*.1.mkv)
-METADATA_FILES := $(subst .1.mkv,.yml,$(INPUT_VIDEOS))
+INPUT_VIDEOS := $(wildcard $(VIDEO)/*.mkv)
+METADATA_FILES := $(subst .mkv,.yml,$(INPUT_VIDEOS))
 VIDEOS := $(subst .yml,.final.mkv,$(wildcard $(VIDEO)/*.yml))
 TRAILER_ASSETS := $(shell perl -nle 'print "assets/$$1" if /file\s+.(.*?).$$/' $(TRAILER_SLIDESHOW))
 
@@ -51,8 +51,7 @@ trailer-assets: $(TRAILER_ASSETS)
 %.png: %.svg
 	inkscape --export-type=png --export-area-page -d 25.40 $< -o $@
 
-#%.yml : | %.joined.mkv
-%.yml : %.1.mkv
+%.yml : | %.mkv
 	$(METADATA) $^ $| --show "$(SHOW)" --language deu --url-base "$(ACT_BASE)" -o $@
 
 $(TRAILER_SLIDESHOW): trailer-assets
