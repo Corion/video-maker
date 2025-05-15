@@ -243,6 +243,7 @@ let cutmarks = <%== encode_json( $cutmarks ) %>;
 
 let midiInput;
 let midiOutput;
+let playUntil = undefined;
 
 function currentTrack() {
     return parseInt( document.getElementById("cutmark").value, 10 );
@@ -321,8 +322,8 @@ let commands = {
     },
     playToEndCue: function() {
         video.pause();
-        cutmarks[ currentTrack() ].playUntil = to_sec( document.getElementById("timer_stop").value );
-        video.currentTime = cutmarks[ currentTrack() ].playUntil -3;
+        playUntil = { track: currentTrack(), ts: to_sec( document.getElementById("timer_stop").value )};
+        video.currentTime = playUntil.ts -3;
         video.play();
     },
     eraseEndCue: function() {
@@ -564,13 +565,29 @@ async function setupMidiInput() {
 
 function ready() {
     video = document.getElementById("myvideo");
-    video.addEventListener('timeupdate', function() {
+    let seeking = false;
+    video.addEventListener('timeupdate', async function() {
         document.getElementById("timer").innerHTML = to_ts( video.currentTime );
-        if( cutmarks[ currentTrack() ].playUntil && video.currentTime >= cutmarks[ currentTrack() ].playUntil ) {
-            video.pause();
-            // should we switch to currentTrack+1 here?!
-            // and only stop otherwise?!
-            cutmarks[ currentTrack() ].playUntil = undefined;
+        let curr = currentTrack();
+        if( playUntil ) {
+            if( ! seeking ) {
+                if( curr == playUntil.track-1 || curr == cutmarks.length) {
+                    await video.pause();
+
+                    // Test the transition
+                    if( curr < cutmarks.length -1 ) {
+                        seeking = true;
+                        video.currentTime = to_sec(cutmarks[ curr+1 ].inpoint);
+                        // How can we wait here so we know when to play again?!
+                        await video.play();
+                        seeking = false;
+                    } else if( curr == cut ) {
+                    } else {
+                        // Remain stopped
+                        playUntil = undefined;
+                    }
+                }
+            }
         };
     });
     let btnSave = document.getElementById("btnSave");
