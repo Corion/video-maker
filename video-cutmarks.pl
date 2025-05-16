@@ -103,6 +103,7 @@ sub fetch_config {
     } else {
         $info = LoadFile( $info );
     }
+    return $info
 }
 
 sub update_file( $filename, $new_content ) {
