@@ -15,8 +15,6 @@ use POSIX qw(strftime);
 
 plugin AutoReload => {};
 
-unshift @{ app->static->paths }, getcwd;
-
 my $config;
 if( ! $ENV{CONFIG}) {
     die "No CONFIG= given!";
@@ -26,12 +24,14 @@ open my $fh, '<', $ENV{CONFIG}
     or die "Couldn't read config file '$ENV{CONFIG}'";
 my %config = map { /^\s*([^#].*?)=(.*)/ ? ($1 => $2) : () } <$fh>;
 
+unshift app->static->paths->@*, $config{VIDEO};
+
 app->types->type( MP4 => 'video/mp4' );
 app->types->type( mkv => 'video/webm' );
 
 sub video_file {
     my ($fn) = @_;
-    return $config{VIDEO} . '/' . $fn;
+    return $fn;
 }
 
 sub yaml_file {
