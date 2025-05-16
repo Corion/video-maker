@@ -34,8 +34,8 @@ if( $schedule_file ) {
     my $name = decode('UTF-8', basename $movie);
 
     if( $name =~ /^(20\d\d-\d\d-\d\d)[-_ T](\d\d-\d\d-\d\d)\b/ ) {
-        #my $ts = "$1T$2+0200";
-        my $ts = "$1T$2+0100"; # the recording machines run on GMT+1 / UK time
+        my $ts = "$1T$2+0200";
+        #my $ts = "$1T$2+0100"; # the recording machines run on GMT+1 / UK time
         #warn "Found timestamp $ts";
         my $start_time = Time::Piece->strptime($ts,'%Y-%m-%dT%H-%M-%S%z');
 
