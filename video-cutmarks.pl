@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use 5.020;
-use feature 'signatures';
+use feature 'signatures', 'postderef';
 no warnings 'experimental::signatures';
 
 use Mojolicious::Lite;
